@@ -1,26 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { api } from './api';
+import Article from './types/article';
 
-function App() {
+export default function App() {
+
+  function getArticles() {
+    api.get("/article")
+      .then(response => {
+        let article: Article = response.data;
+        console.log(article);
+      })
+      .catch(error => {
+        console.error(error);
+      })
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={getArticles}>
+        Get articles
+      </button>
     </div>
   );
 }
-
-export default App;
