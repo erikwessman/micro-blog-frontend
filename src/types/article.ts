@@ -5,5 +5,5 @@ export default interface Article {
     date: string,
     categories: string[];
     image?: string;
-    content?: string;
+    content: string;
 }
