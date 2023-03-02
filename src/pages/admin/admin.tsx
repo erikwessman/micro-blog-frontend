@@ -1,28 +1,41 @@
-import { Button, Container, Card, Divider } from "@mui/material";
+import { useState } from "react";
+import { Button, Container, Card, Divider, Snackbar } from "@mui/material";
 import { api } from "../../api";
 
 export default function Admin() {
+    const [alertOpen, setAlertOpen] = useState<boolean>(false);
+    const [alertMessage, setAlertMessage] = useState<String>("");
+
     function getStatus() {
         api.get("/status")
             .then(response => {
-                console.log(response.data);
+                setAlertOpen(true);
+                setAlertMessage(response.data);
             })
             .catch(error => {
-                if (error.response) {
-                    console.log("Data :", error.response.data);
-                    console.log("Status :" + error.response.status);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
-                }
+                setAlertOpen(false);
+                setAlertMessage("Server is not reachable");
             })
     }
+
+    const handleCloseAlert = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setAlertOpen(false);
+      };
 
     return (
         <div>
             <main>
                 <Container>
+                    <Snackbar
+                        open={alertOpen}
+                        autoHideDuration={3000}
+                        onClose={handleCloseAlert}
+                        message={alertMessage}
+                    />
                     <Card variant="outlined">
                         <Button variant="contained" onClick={getStatus}>
                             Get status

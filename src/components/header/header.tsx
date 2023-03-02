@@ -10,7 +10,7 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 
 export default function Header() {
     return (
-        <AppBar position="static">
+        <AppBar position="static" sx={{ background: "#28282B" }}>
             <Container>
                 <Toolbar>
                     <NewspaperIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
