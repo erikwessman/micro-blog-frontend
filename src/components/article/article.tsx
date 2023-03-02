@@ -6,7 +6,6 @@ import { Tooltip } from "@mui/material";
 import './article.sass'
 
 export default function Article(props: { article: IArticle }) {
-
     return (
         <div className="entry">
             <div className="entry-body">
@@ -23,9 +22,23 @@ export default function Article(props: { article: IArticle }) {
                     </Tooltip>
                     {props.article.author}
                 </div>
-                <Markdown>
-                    {props.article.content}
-                </Markdown>
+                <div className="entry-content">
+                    <div className="entry-text">
+                        <Markdown>
+                            {props.article.content}
+                        </Markdown>
+                    </div>
+                    {props.article.image ?
+                        <div className="entry-image">
+                            <img alt="article"
+                                src={"/images/" + props.article.image}
+                                onError={({ currentTarget }) => {
+                                    currentTarget.onerror = null;
+                                    currentTarget.src="/images/theo.jpeg";
+                                  }} />
+                        </div>
+                        : null}
+                </div>
             </div>
             <div className="entry-footer">
                 Categories: {props.article.categories.join(', ')}
