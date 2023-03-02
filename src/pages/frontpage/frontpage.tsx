@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { api } from '../../api';
-import Article from '../../types/article';
-import Markdown from 'markdown-to-jsx';
+import IArticle from '../../types/article';
 import { Container } from '@mui/material';
+import Article from '../../components/article/article';
 
 export default function Frontpage() {
-    const [articles, setArticles] = useState<Article[]>([]);
+    const [articles, setArticles] = useState<IArticle[]>([]);
 
     useEffect(() => {
         getArticles();
@@ -14,7 +14,7 @@ export default function Frontpage() {
     function getArticles() {
         api.get("/article")
             .then(response => {
-                const articles_resp: Article[] = response.data;
+                const articles_resp: IArticle[] = response.data;
                 setArticles(articles_resp);
             })
             .catch(error => {
@@ -35,12 +35,8 @@ export default function Frontpage() {
                 <Container>
                     <article>
                         {articles.map((article, index) => (
-                            <div key={index}>
-                                <h2>{article.title}</h2>
-                                <Markdown>
-                                    {article.content}
-                                </Markdown>
-                            </div>
+                            <Article key={index}
+                                article={article} />
                         ))}
                     </article>
                 </Container>

@@ -6,14 +6,14 @@ import {
     Link,
     Box
 } from '@mui/material';
-import RocketIcon from '@mui/icons-material/Rocket';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 
 export default function Header() {
     return (
         <AppBar position="static">
             <Container>
                 <Toolbar>
-                    <RocketIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <NewspaperIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
                         noWrap
