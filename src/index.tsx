@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
-import Frontpage from './components/frontpage/frontpage';
+import Frontpage from './pages/frontpage/frontpage';
+import Admin from './pages/admin/admin';
+import PageNotFound from './pages/pageNotFound/pageNotFound';
 import Header from './components/header/header';
 import reportWebVitals from './reportWebVitals';
 
@@ -15,6 +17,8 @@ root.render(
       <Header />
       <Routes>
         <Route path="/" element={<Frontpage />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

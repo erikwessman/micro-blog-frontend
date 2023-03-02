@@ -2,10 +2,7 @@ import { useState, useEffect } from 'react';
 import { api } from '../../api';
 import Article from '../../types/article';
 import Markdown from 'markdown-to-jsx';
-import {
-    Grid,
-    Button
-} from '@mui/material';
+import { Container } from '@mui/material';
 
 export default function Frontpage() {
     const [articles, setArticles] = useState<Article[]>([]);
@@ -15,10 +12,9 @@ export default function Frontpage() {
     }, []);
 
     function getArticles() {
-        api.get("/article/all")
+        api.get("/article")
             .then(response => {
                 const articles_resp: Article[] = response.data;
-                console.log(articles_resp)
                 setArticles(articles_resp);
             })
             .catch(error => {
@@ -36,17 +32,18 @@ export default function Frontpage() {
     return (
         <div>
             <main>
-                <Button>
-                    Get status
-                </Button>
-                {articles.map((article) => (
-                    <div>
-                        <h2>{article.title}</h2>
-                        <Markdown>
-                            {article.content}
-                        </Markdown>
-                    </div>
-                ))}
+                <Container>
+                    <article>
+                        {articles.map((article, index) => (
+                            <div key={index}>
+                                <h2>{article.title}</h2>
+                                <Markdown>
+                                    {article.content}
+                                </Markdown>
+                            </div>
+                        ))}
+                    </article>
+                </Container>
             </main>
         </div>
     )

@@ -29,15 +29,17 @@ export default function Header() {
                             textDecoration: 'none',
                         }}
                     >
-                        DAMNNN
+                        MICRO-BLOG
                     </Typography>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <Link href="/something">
-                            Something
+                    <Box sx={{ p: 2 }}>
+                        <Link href="/admin" color="#fff" underline="hover" sx={{ p: 1 }}>
+                            Admin
+                        </Link>
+                        <Link href="/settings" color="#fff" underline="hover" sx={{ p: 1 }}>
+                            Settings
                         </Link>
                     </Box>
-
                 </Toolbar>
             </Container>
         </AppBar>
