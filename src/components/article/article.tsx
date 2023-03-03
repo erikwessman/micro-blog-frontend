@@ -46,7 +46,7 @@ export default function Article(props: { article: IArticle }) {
                 <p>
                     Categories:
                     {props.article.categories.map((category, index) => (
-                        <Link key={index} href={`?category=${category}`} underline="hover" color="black">
+                        <Link key={index} href={`?categories=${category}`} underline="hover" color="black">
                             {category}
                         </Link>
                     ))}

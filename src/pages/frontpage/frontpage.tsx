@@ -2,17 +2,19 @@ import { useState, useEffect } from 'react';
 import { api } from '../../api';
 import IArticle from '../../types/article';
 import { Container } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 import Article from '../../components/article/article';
 
 export default function Frontpage() {
     const [articles, setArticles] = useState<IArticle[]>([]);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
-        getArticles();
-    }, []);
+        getArticles(searchParams);
+    }, [searchParams]);
 
-    function getArticles() {
-        api.get("/article")
+    function getArticles(articleParams: URLSearchParams) {
+        api.get("/article", {params: articleParams})
             .then(response => {
                 const articles_resp: IArticle[] = response.data;
                 setArticles(articles_resp);
