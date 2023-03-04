@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { api } from '../../api';
 import IArticle from '../../types/article';
-import { Container } from '@mui/material';
+import { Container, Box, TextField, Button } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import Article from '../../components/article/article';
 
 export default function Frontpage() {
     const [articles, setArticles] = useState<IArticle[]>([]);
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         getArticles(searchParams);
     }, [searchParams]);
 
     function getArticles(articleParams: URLSearchParams) {
-        api.get("/article", {params: articleParams})
+        api.get("/article", { params: articleParams })
             .then(response => {
                 const articles_resp: IArticle[] = response.data;
                 setArticles(articles_resp);
@@ -31,10 +31,25 @@ export default function Frontpage() {
             })
     }
 
+    function handleSubmitFilter(event: any) {
+        event.preventDefault();
+        setSearchParams({
+            author: event.target.author.value,
+            category: event.target.category.value,
+            date: event.target.date.value
+        });
+    }
+
     return (
         <div>
             <main>
                 <Container>
+                    <Box component="form" noValidate onSubmit={handleSubmitFilter} sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', margin: '1rem' }}>
+                        <TextField name="author" id="author" label="Author" variant="standard" />
+                        <TextField name="category" id="category" label="Category" variant="standard" />
+                        <TextField name="date" id="date" label="Date" variant="standard" />
+                        <Button type='submit' variant="contained">Filter</Button>
+                    </Box>
                     <article>
                         {articles.map((article, index) => (
                             <Article key={index}
