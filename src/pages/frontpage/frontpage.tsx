@@ -33,11 +33,14 @@ export default function Frontpage() {
 
     function handleSubmitFilter(event: any) {
         event.preventDefault();
-        setSearchParams({
-            author: event.target.author.value,
-            category: event.target.category.value,
-            date: event.target.date.value
-        });
+
+        const filterParams = {
+            ...(event.target.author.value !== "" && {author: event.target.author.value}),
+            ...(event.target.category.value !== "" && {category: event.target.category.value}),
+            ...(event.target.date.value !== "" && {date: event.target.date.value})
+        }
+
+        setSearchParams(filterParams);
     }
 
     return (
