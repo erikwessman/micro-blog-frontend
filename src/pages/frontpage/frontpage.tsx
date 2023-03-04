@@ -7,7 +7,7 @@ import Article from '../../components/article/article';
 
 export default function Frontpage() {
     const [articles, setArticles] = useState<IArticle[]>([]);
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
         getArticles(searchParams);

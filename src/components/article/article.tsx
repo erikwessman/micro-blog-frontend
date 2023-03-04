@@ -32,7 +32,7 @@ export default function Article(props: { article: IArticle }) {
                     </div>
                     {props.article.image ?
                         <div className="entry-image">
-                            <img alt="article"
+                            <img alt={props.article.image}
                                 src={"/images/" + props.article.image}
                                 onError={({ currentTarget }) => {
                                     currentTarget.onerror = null;
