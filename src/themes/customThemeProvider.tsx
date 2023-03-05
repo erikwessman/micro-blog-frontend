@@ -16,11 +16,8 @@ export const CustomThemeContext = React.createContext<CustomThemeContextType>(
 
 export default function CustomThemeProvider(props: any) {
     const { children } = props;
-
     const currentTheme = localStorage.getItem('appTheme') || 'light';
-
     const [themeName, _setThemeName] = useState<string>(currentTheme);
-
     const theme = getTheme(themeName)
 
     function setThemeName(name: string) {
