@@ -35,9 +35,9 @@ export default function Frontpage() {
         event.preventDefault();
 
         const filterParams = {
-            ...(event.target.author.value !== "" && { author: event.target.author.value }),
-            ...(event.target.category.value !== "" && { categories: event.target.category.value }),
-            ...(event.target.date.value !== "" && { date: event.target.date.value })
+            ...(event.target.author.value.trim() !== "" && { author: event.target.author.value }),
+            ...(event.target.category.value.trim() !== "" && { categories: event.target.category.value }),
+            ...(event.target.date.value.trim() !== "" && { date: event.target.date.value })
         }
 
         setSearchParams(filterParams);
