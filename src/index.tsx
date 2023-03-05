@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import Frontpage from './pages/frontpage/frontpage';
 import Admin from './pages/admin/admin';
+import Register from './pages/register/register';
+import Login from './pages/login/login';
 import PageNotFound from './pages/pageNotFound/pageNotFound';
 import Header from './components/header/header';
 import reportWebVitals from './reportWebVitals';
@@ -18,6 +20,8 @@ root.render(
       <Routes>
         <Route path="/" element={<Frontpage />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>

@@ -4,9 +4,11 @@ import {
     Toolbar,
     Typography,
     Link,
-    Box
+    Box,
+    IconButton
 } from '@mui/material';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function Header() {
     return (
@@ -40,6 +42,10 @@ export default function Header() {
                             Settings
                         </Link>
                     </Box>
+
+                    <IconButton aria-label="account" href="/register" color="primary">
+                        <AccountCircleIcon />
+                    </IconButton>
                 </Toolbar>
             </Container>
         </AppBar>
