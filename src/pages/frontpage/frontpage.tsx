@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { api } from '../../api';
-import IArticle from '../../types/article';
+import { api } from '@/api';
+import IArticle from '@/types/article';
 import { Container, Box, TextField, Button } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
-import Article from '../../components/article/article';
+import Article from '@/components/article/article';
 
 export default function Frontpage() {
     const [articles, setArticles] = useState<IArticle[]>([]);

@@ -23,5 +23,6 @@
   "include": [
     "src",
     "mui.d.ts"
-  ]
+  ],
+  "extends": "./tsconfig.paths.json"
 }

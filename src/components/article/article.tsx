@@ -1,4 +1,4 @@
-import IArticle from "../../types/article";
+import IArticle from "@/types/article";
 import Markdown from "markdown-to-jsx";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';

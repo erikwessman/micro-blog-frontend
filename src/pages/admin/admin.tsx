@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Container, Card, Divider, Snackbar } from "@mui/material";
-import { api } from "../../api";
+import { api } from "@/api";
 
 export default function Admin() {
     const [alertOpen, setAlertOpen] = useState<boolean>(false);

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CustomThemeContext } from "../../themes/customThemeProvider";
+import { CustomThemeContext } from "@/themes/customThemeProvider";
 import { Box, Container, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
 
 export default function Settings() {
