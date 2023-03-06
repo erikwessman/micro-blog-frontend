@@ -7,7 +7,7 @@ import './article.sass'
 
 export default function Article(props: { article: IArticle }) {
     return (
-        <div className="entry">
+        <Box component="div" className="entry" bgcolor={"primary.light"}>
             <div className="entry-body">
                 <div className="entry-date">
                     <Tooltip title="Publish date">
@@ -20,7 +20,7 @@ export default function Article(props: { article: IArticle }) {
                     <Tooltip title="Author">
                         <PermIdentityIcon />
                     </Tooltip>
-                    <Link href={`?author=${props.article.author}`} underline="hover" color="black">
+                    <Link href={`?author=${props.article.author}`} underline="hover" color="inherit">
                         {props.article.author}
                     </Link>
                 </div>
@@ -46,12 +46,12 @@ export default function Article(props: { article: IArticle }) {
                 <p>
                     Categories:
                     {props.article.categories.map((category, index) => (
-                        <Link key={index} href={`?categories=${category}`} underline="hover" color="black">
+                        <Link key={index} href={`?categories=${category}`} underline="hover" color="inherit">
                             {category}
                         </Link>
                     ))}
                 </p>
             </div>
-        </div>
+        </Box>
     )
 }

@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { CssBaseline } from '@mui/material';
 import CustomThemeProvider from '@/themes/customThemeProvider';
 import Frontpage from '@/pages/frontpage/frontpage';
 import Admin from '@/pages/admin/admin';
@@ -11,6 +12,7 @@ import Header from '@/components/header/header';
 export default function App() {
     return (
         <CustomThemeProvider>
+            <CssBaseline />
             <BrowserRouter>
                 <Header />
                 <Routes>

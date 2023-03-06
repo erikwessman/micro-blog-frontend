@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Container, Card, Divider, Snackbar } from "@mui/material";
+import { Button, Container, Card, Snackbar, Box } from "@mui/material";
 import { api } from "@/api";
 
 export default function Admin() {
@@ -20,28 +20,29 @@ export default function Admin() {
 
     const handleCloseAlert = (event: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
-          return;
+            return;
         }
-    
+
         setAlertOpen(false);
-      };
+    };
 
     return (
         <div>
             <main>
                 <Container>
-                    <Snackbar
-                        open={alertOpen}
-                        autoHideDuration={3000}
-                        onClose={handleCloseAlert}
-                        message={alertMessage}
-                    />
-                    <Card variant="outlined">
-                        <Button variant="contained" onClick={getStatus}>
-                            Get status
-                        </Button>
-                    </Card>
-                    <Divider />
+                    <Box sx={{ margin: '2rem' }}>
+                        <Snackbar
+                            open={alertOpen}
+                            autoHideDuration={3000}
+                            onClose={handleCloseAlert}
+                            message={alertMessage}
+                        />
+                        <Card variant="outlined">
+                            <Button variant="contained" onClick={getStatus} color="secondary">
+                                Get status
+                            </Button>
+                        </Card>
+                    </Box>
                 </Container>
             </main>
         </div>

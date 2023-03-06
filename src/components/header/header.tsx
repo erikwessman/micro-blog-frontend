@@ -12,7 +12,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function Header() {
     return (
-        <AppBar position="static" sx={{ background: "#28282B" }}>
+        <AppBar position="static" color="primary">
             <Container>
                 <Toolbar>
                     <NewspaperIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -35,15 +35,15 @@ export default function Header() {
                     </Typography>
 
                     <Box sx={{ p: 2 }}>
-                        <Link href="/admin" color="#fff" underline="hover" sx={{ p: 1 }}>
+                        <Link href="/admin" color="inherit" underline="hover" sx={{ p: 1 }}>
                             Admin
                         </Link>
-                        <Link href="/settings" color="#fff" underline="hover" sx={{ p: 1 }}>
+                        <Link href="/settings" color="inherit" underline="hover" sx={{ p: 1 }}>
                             Settings
                         </Link>
                     </Box>
 
-                    <IconButton aria-label="account" href="/register" color="primary">
+                    <IconButton aria-label="account" href="/register" color="secondary">
                         <AccountCircleIcon />
                     </IconButton>
                 </Toolbar>
