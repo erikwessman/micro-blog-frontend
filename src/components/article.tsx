@@ -1,8 +1,7 @@
 import IArticle from "@/types/article";
 import Markdown from "markdown-to-jsx";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { Box, Tooltip, Link, Typography } from "@mui/material";
+import FaceIcon from '@mui/icons-material/Face';
 
 export default function Article(props: { article: IArticle }) {
     return (
@@ -15,35 +14,43 @@ export default function Article(props: { article: IArticle }) {
                 backgroundColor: 'primary.light'
             }}>
             <Box component="div" className="entry-body">
-                <Box component="div" className="entry-date"
+                <Typography variant="h5"
                     sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        flexWrap: 'wrap'
+                        display: { xs: 'none', md: 'flex' },
+                        fontWeight: 600
                     }}>
-                    <Tooltip title="Publish date">
-                        <CalendarMonthIcon />
-                    </Tooltip>
-                    {props.article.date}
-                </Box>
-
-                <h2>{props.article.title}</h2>
+                    {props.article.title}
+                </Typography>
 
                 <Box component="div" className="entry-author"
                     sx={{
+                        marginTop: '0.5rem',
                         display: 'flex',
-                        alignItems: 'center',
-                        flexWrap: 'wrap'
+                        flexDirection: 'row'
                     }}>
-                    <Tooltip title="Author">
-                        <PermIdentityIcon />
-                    </Tooltip>
-
-                    <Link href={`?author=${props.article.author}`}
-                        underline="hover"
-                        color="inherit">
-                        {props.article.author}
-                    </Link>
+                    <Box component="div"
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                        <FaceIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    </Box>
+                    <Box component="div" className="entry-information">
+                        <Tooltip title="Author">
+                            <Link href={`?author=${props.article.author}`}
+                                underline="hover"
+                                color="inherit">
+                                {props.article.author}
+                            </Link>
+                        </Tooltip>
+                        <Typography sx={{
+                            fontSize: '0.85rem',
+                            opacity: '0.6'
+                        }}>
+                            {props.article.date}
+                        </Typography>
+                    </Box>
                 </Box>
 
                 <Box component="div" className="entry-content"
@@ -51,7 +58,7 @@ export default function Article(props: { article: IArticle }) {
                         display: 'flex',
                         justifyContent: 'space-between'
                     }}>
-                    
+
                     <Box component="div" className="entry-text">
                         <Markdown>
                             {props.article.content}
@@ -59,7 +66,12 @@ export default function Article(props: { article: IArticle }) {
                     </Box>
 
                     {props.article.image ?
-                        <Box component="div" className="entry-image">
+                        <Box component="div" className="entry-image"
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
                             <Box component="img" alt={props.article.image}
                                 src={"/images/" + props.article.image}
                                 onError={({ currentTarget }) => {
@@ -70,7 +82,7 @@ export default function Article(props: { article: IArticle }) {
                                     height: '15rem',
                                     marginLeft: '1.5rem',
                                     boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px'
-                                }}/>
+                                }} />
                         </Box>
                         : null}
                 </Box>
