@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import CustomThemeProvider from '@/themes/customThemeProvider';
-import Frontpage from '@/pages/frontpage/frontpage';
-import Admin from '@/pages/admin/admin';
-import Settings from '@/pages/settings/settings';
-import Register from '@/pages/register/register';
-import Login from '@/pages/login/login';
-import PageNotFound from '@/pages/pageNotFound/pageNotFound';
-import Header from '@/components/header/header';
+import Frontpage from '@/pages/frontpage';
+import Admin from '@/pages/admin';
+import Settings from '@/pages/settings';
+import Register from '@/pages/register';
+import Login from '@/pages/login';
+import PageNotFound from '@/pages/pageNotFound';
+import Header from '@/components/header';
 
 export default function App() {
     return (
