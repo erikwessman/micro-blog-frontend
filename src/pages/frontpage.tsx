@@ -47,11 +47,35 @@ export default function Frontpage() {
         <Box component="div">
             <main>
                 <Container>
-                    <Box component="form" noValidate onSubmit={handleSubmitFilter} sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', margin: '1rem' }}>
-                        <TextField name="author" id="author" label="Author" variant="standard" color={"secondary"} />
-                        <TextField name="category" id="category" label="Category" variant="standard" color={"secondary"} />
-                        <TextField name="date" id="date" label="Date" variant="standard" color={"secondary"} />
-                        <Button type='submit' variant="contained" color="secondary">Filter</Button>
+                    <Box component="form"
+                        noValidate
+                        onSubmit={handleSubmitFilter}
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'space-evenly',
+                            alignItems: 'center',
+                            margin: '1rem'
+                        }}>
+                        <TextField name="author"
+                            id="author"
+                            label="Author"
+                            variant="standard"
+                            color="secondary" />
+                        <TextField name="category"
+                            id="category"
+                            label="Category"
+                            variant="standard"
+                            color="secondary" />
+                        <TextField name="date"
+                            id="date"
+                            label="Date"
+                            variant="standard"
+                            color="secondary" />
+                        <Button type='submit'
+                            variant="contained"
+                            color="secondary">
+                            Filter
+                        </Button>
                     </Box>
                     <article>
                         {articles.map((article, index) => (
