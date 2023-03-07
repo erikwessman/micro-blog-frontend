@@ -15,16 +15,18 @@ export default function Settings() {
                 <Container>
                     <Box sx={{ margin: '2rem' }}>
                         <FormControl fullWidth>
-                            <InputLabel id="select-menu">Theme</InputLabel>
+                            <InputLabel id="select-menu" color="secondary">Theme</InputLabel>
                             <Select
                                 labelId="select-menu"
                                 id="select-menu"
                                 value={currentTheme}
                                 label="Age"
                                 onChange={handleChangeTheme}
+                                color="secondary"
                             >
                                 <MenuItem value={"light"}>Light</MenuItem>
                                 <MenuItem value={"dark"}>Dark</MenuItem>
+                                <MenuItem value={"sun"}>Sun</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>
