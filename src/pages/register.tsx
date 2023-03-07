@@ -1,8 +1,74 @@
+import { Box, Container, TextField, Button } from "@mui/material";
+import { api } from "@/api";
+import IUser from "@/types/user";
+
 export default function Register() {
 
+    function handleSubmitRegister(event: any) {
+        event.preventDefault();
+
+        const registerRequest: IUser = {
+            username: event.target.username.value,
+            email: event.target.email.value,
+            password: event.target.password.value
+        }
+
+        api.post("/user", registerRequest)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(error => {
+                if (error.response) {
+                    console.log("Data :", error.response.data);
+                    console.log("Status :" + error.response.status);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+            })
+    }
+
     return (
-        <div>
-            
-        </div>
+        <Box component="div">
+            <main>
+                <Container>
+                    <Box component="form"
+                        noValidate
+                        onSubmit={handleSubmitRegister}
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            width: '50%'
+                        }}>
+                        <TextField name="username"
+                            id="username"
+                            label="Username"
+                            variant="standard"
+                            margin="normal"
+                            color="secondary" />
+                        <TextField name="email"
+                            id="email"
+                            label="Email"
+                            variant="standard"
+                            margin="normal"
+                            type="email"
+                            color="secondary" />
+                        <TextField name="password"
+                            id="password"
+                            label="Password"
+                            variant="standard"
+                            margin="normal"
+                            type="password"
+                            color="secondary" />
+                        <Button type="submit"
+                            variant="contained"
+                            color="secondary">
+                            Register
+                        </Button>
+                    </Box>
+                </Container>
+            </main>
+        </Box>
     )
 }

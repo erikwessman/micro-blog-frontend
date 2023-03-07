@@ -52,7 +52,10 @@ export default function Header() {
 
                     <IconButton aria-label="account"
                         href="/register"
-                        color="secondary">
+                        color="secondary"
+                        sx={{
+                            marginLeft: 'auto'
+                        }}>
                         <AccountCircleIcon />
                     </IconButton>
                 </Toolbar>
