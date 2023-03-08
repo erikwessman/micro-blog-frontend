@@ -102,7 +102,7 @@ export default function Article(props: { article: IArticle }) {
             <Box component="div" className="entry-footer" sx={{ display: 'flex', marginTop: '0.5rem', justifyContent: 'center' }}>
                 {props.article.categories.map((category, index) => (
                     <Link key={index}
-                        href={`?categories=${category}`}
+                        href={`/?categories=${category}`}
                         underline="hover"
                         color="inherit"
                         sx={{ p: 0.5, m: 0.5, fontWeight: 600 }}>
