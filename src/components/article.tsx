@@ -15,22 +15,24 @@ export default function Article(props: { article: IArticle }) {
                 boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;',
                 backgroundColor: 'primary.light'
             }}>
-            <Box component="div" className="entry-options" sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Tooltip title="Share">
-                    <IconButton>
-                        <ShareIcon />
-                    </IconButton>
-                </Tooltip>
-                <Tooltip title="Open in new tab">
-                    <IconButton href={`/article/${props.article._id}`} target="_blank">
-                        <OpenInNewIcon />
-                    </IconButton>
-                </Tooltip>
-            </Box>
             <Box component="div" className="entry-body">
-                <Typography variant="h5" sx={{ display: { xs: 'none', md: 'flex' }, fontWeight: 600 }}>
-                    {props.article.title}
-                </Typography>
+                <Box component="div" className="entry-header" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="h5" sx={{ display: { xs: 'none', md: 'flex' }, fontWeight: 600 }}>
+                        {props.article.title}
+                    </Typography>
+                    <Box component="div" className="entry-options" sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <Tooltip title="Share">
+                            <IconButton>
+                                <ShareIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Open in new tab">
+                            <IconButton href={`/article/${props.article._id}`} target="_blank">
+                                <OpenInNewIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </Box>
+                </Box>
 
                 <Box component="div" className="entry-author"
                     sx={{
