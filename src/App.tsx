@@ -6,6 +6,7 @@ import Admin from '@/pages/admin';
 import Settings from '@/pages/settings';
 import Register from '@/pages/register';
 import Login from '@/pages/login';
+import ArticlePage from './pages/articlePage';
 import PageNotFound from '@/pages/pageNotFound';
 import Header from '@/components/header';
 
@@ -21,6 +22,7 @@ export default function App() {
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/article/:id" element={<ArticlePage />} />
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
             </BrowserRouter>
