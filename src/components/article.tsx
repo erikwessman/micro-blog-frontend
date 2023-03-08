@@ -1,6 +1,6 @@
 import IArticle from "@/types/article";
 import Markdown from "markdown-to-jsx";
-import { Box, Tooltip, Link, Typography } from "@mui/material";
+import { Box, Tooltip, Link, Typography, Divider } from "@mui/material";
 import FaceIcon from '@mui/icons-material/Face';
 
 export default function Article(props: { article: IArticle }) {
@@ -14,11 +14,7 @@ export default function Article(props: { article: IArticle }) {
                 backgroundColor: 'primary.light'
             }}>
             <Box component="div" className="entry-body">
-                <Typography variant="h5"
-                    sx={{
-                        display: { xs: 'none', md: 'flex' },
-                        fontWeight: 600
-                    }}>
+                <Typography variant="h5" sx={{ display: { xs: 'none', md: 'flex' }, fontWeight: 600 }}>
                     {props.article.title}
                 </Typography>
 
@@ -44,10 +40,7 @@ export default function Article(props: { article: IArticle }) {
                                 {props.article.author}
                             </Link>
                         </Tooltip>
-                        <Typography sx={{
-                            fontSize: '0.85rem',
-                            opacity: '0.6'
-                        }}>
+                        <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
                             {props.article.date}
                         </Typography>
                     </Box>
@@ -88,24 +81,18 @@ export default function Article(props: { article: IArticle }) {
                 </Box>
             </Box>
 
-            <Box component="div" className="entry-footer">
-                <Typography paragraph
-                    sx={{
-                        margin: '0.25rem'
-                    }}>
-                    Categories:
-                    {props.article.categories.map((category, index) => (
-                        <Link key={index}
-                            href={`?categories=${category}`}
-                            underline="hover"
-                            color="inherit"
-                            sx={{
-                                marginLeft: '0.5rem'
-                            }}>
-                            {category}
-                        </Link>
-                    ))}
-                </Typography>
+            <Divider>Categories</Divider>
+
+            <Box component="div" className="entry-footer" sx={{ display: 'flex', marginTop: '0.5rem', justifyContent: 'center' }}>
+                {props.article.categories.map((category, index) => (
+                    <Link key={index}
+                        href={`?categories=${category}`}
+                        underline="hover"
+                        color="inherit"
+                        sx={{ p: 0.5, m: 0.5, fontWeight: 600 }}>
+                        {category}
+                    </Link>
+                ))}
             </Box>
         </Box>
     )
