@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { CssBaseline } from '@mui/material';
+import CustomThemeProvider from '@/themes/customThemeProvider';
+import Frontpage from '@/pages/frontpage';
+import Admin from '@/pages/admin';
+import Settings from '@/pages/settings';
+import Register from '@/pages/register';
+import Login from '@/pages/login';
+import ArticlePage from './pages/articlePage';
+import PageNotFound from '@/pages/pageNotFound';
+import Header from '@/components/header';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+    return (
+        <CustomThemeProvider>
+            <CssBaseline />
+            <BrowserRouter>
+                <Header />
+                <Routes>
+                    <Route path="/" element={<Frontpage />} />
+                    <Route path="/admin" element={<Admin />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/article/:id" element={<ArticlePage />} />
+                    <Route path="*" element={<PageNotFound />} />
+                </Routes>
+            </BrowserRouter>
+        </CustomThemeProvider>
+    )
 }
-
-export default App;
