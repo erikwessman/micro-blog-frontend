@@ -5,6 +5,13 @@ export default interface IArticle {
     description?: string;
     date: string,
     categories: string[];
-    image?: string;
+    image?: IImage;
     content: string;
+}
+
+interface IImage {
+    src: string;
+    alt: string;
+    caption?: string;
+    link?: string;
 }
