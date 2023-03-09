@@ -47,6 +47,17 @@ export default function Frontpage() {
         <Box component="div">
             <main>
                 <Container>
+                    <Box component="div"
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            margin: '1rem'
+                        }}>
+                        <Button variant="contained" color="secondary" href="/new">
+                            Create new article
+                        </Button>
+                    </Box>
                     <Box component="form"
                         noValidate
                         onSubmit={handleSubmitFilter}
