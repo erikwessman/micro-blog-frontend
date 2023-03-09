@@ -1,4 +1,4 @@
-import { Box, Container, TextField, Button } from "@mui/material";
+import { Box, Container, TextField, Button, Typography } from "@mui/material";
 import { api } from "@/api";
 import IUser from "@/types/user";
 
@@ -33,6 +33,14 @@ export default function Register() {
         <Box component="div">
             <main>
                 <Container>
+                    <Box>
+                        <Typography component="span">
+                            Already have an account? &nbsp;
+                            <Typography component="a" href="/login" color="inherit">
+                                Log in
+                            </Typography>
+                        </Typography>
+                    </Box>
                     <Box component="form"
                         noValidate
                         onSubmit={handleSubmitRegister}
