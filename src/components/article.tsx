@@ -50,7 +50,7 @@ export default function Article(props: { article: IArticle }) {
                     </Box>
                     <Box component="div" className="entry-information">
                         <Tooltip title="Author">
-                            <Link href={`?author=${props.article.author}`}
+                            <Link href={`/?author=${props.article.author}`}
                                 underline="hover"
                                 color="inherit">
                                 {props.article.author}
