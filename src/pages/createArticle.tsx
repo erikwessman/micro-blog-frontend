@@ -8,7 +8,7 @@ export default function CreateArticle() {
 
         const userArticleRequest = {
             title: event.target.title.value,
-            categories: event.target.categories.value.split(","),
+            categories: event.target.categories.value.split(",").map((category: string) => category.trim()),
             content: event.target.content.value
         }
 
