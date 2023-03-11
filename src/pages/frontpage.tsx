@@ -4,6 +4,7 @@ import IArticle from '@/types/article';
 import { Container, Box, TextField, Button } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import Article from '@/components/article';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function Frontpage() {
     const [articles, setArticles] = useState<IArticle[]>([]);
@@ -54,7 +55,7 @@ export default function Frontpage() {
                             alignItems: 'center',
                             margin: '1rem'
                         }}>
-                        <Button variant="contained" color="secondary" href="/new">
+                        <Button variant="contained" color="secondary" href="/new" startIcon={<AddIcon />}>
                             Create new article
                         </Button>
                     </Box>

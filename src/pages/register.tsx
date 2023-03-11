@@ -32,7 +32,11 @@ export default function Register() {
     return (
         <Box component="div">
             <main>
-                <Container>
+                <Container sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }}>
                     <Box>
                         <Typography component="span">
                             Already have an account? &nbsp;

@@ -30,7 +30,11 @@ export default function Login() {
     return (
         <Box component="div">
             <main>
-                <Container>
+                <Container sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }}>
                     <Box>
                         <Typography component="span">
                             Dont have an account? &nbsp;
