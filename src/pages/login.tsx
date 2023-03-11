@@ -11,7 +11,7 @@ export default function Login() {
             password: event.target.password.value
         }
 
-        api.get("/user/login", { params: loginRequest })
+        api.get("/authorization/login", { params: loginRequest })
             .then(response => {
                 console.log(response.data)
             })

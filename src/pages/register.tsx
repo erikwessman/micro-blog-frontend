@@ -13,7 +13,7 @@ export default function Register() {
             password: event.target.password.value
         }
 
-        api.post("/user", registerRequest)
+        api.post("/authorization/register", registerRequest)
             .then(response => {
                 console.log(response.data)
             })
