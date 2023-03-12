@@ -85,7 +85,8 @@ export default function Article(props: { article: IArticle }) {
                                 <Box component="img" alt={props.article.image.alt}
                                     src={"/images/" + props.article.image.src}
                                     sx={{
-                                        height: '15rem',
+                                        maxHeight: '17rem',
+                                        maxWidth: '17rem',
                                         boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px'
                                     }} />
                                 <Box component="figcaption" sx={{ textAlign: 'center' }}>
