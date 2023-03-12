@@ -1,8 +1,10 @@
 import { Box, Container, TextField, Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { api } from "@/api";
 import IUser from "@/types/user";
 
 export default function Register() {
+    const navigate = useNavigate();
 
     function handleSubmitRegister(event: any) {
         event.preventDefault();
@@ -15,7 +17,8 @@ export default function Register() {
 
         api.post("/authorization/register", registerRequest)
             .then(response => {
-                console.log(response.data)
+                localStorage.setItem('token', response.data['token']);
+                navigate("/");
             })
             .catch(error => {
                 if (error.response) {

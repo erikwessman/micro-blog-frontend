@@ -14,7 +14,7 @@ export default function CreateArticle() {
 
         api.post("/article/user", userArticleRequest, {
             headers: {
-                'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImVyaWt3ZXNzbWFuIiwiZXhwIjoxNjc4NTY2ODY1fQ.8kPHBvm5xPX9__kFYKi8OcuRBDrUUTG1pehJmLtj9wY'
+                'Authorization': localStorage.getItem('token')
             }
         })
             .then(response => {

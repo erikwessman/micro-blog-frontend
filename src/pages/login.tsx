@@ -1,7 +1,9 @@
 import { Box, Container, TextField, Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { api } from "@/api";
 
 export default function Login() {
+    const navigate = useNavigate();
 
     function handleSubmitLogin(event: any) {
         event.preventDefault();
@@ -13,7 +15,8 @@ export default function Login() {
 
         api.get("/authorization/login", { params: loginRequest })
             .then(response => {
-                console.log(response.data)
+                localStorage.setItem('token', response.data['token']);
+                navigate("/");
             })
             .catch(error => {
                 if (error.response) {
