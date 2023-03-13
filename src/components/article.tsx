@@ -23,12 +23,12 @@ export default function Article(props: { article: IArticle }) {
                     <Box component="div" className="entry-options" sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <Tooltip title="Share">
                             <IconButton>
-                                <ShareIcon />
+                                <ShareIcon color="secondary" />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Open in new tab">
                             <IconButton href={`/article/${props.article._id}`} target="_blank">
-                                <OpenInNewIcon />
+                                <OpenInNewIcon color="secondary" />
                             </IconButton>
                         </Tooltip>
                     </Box>
