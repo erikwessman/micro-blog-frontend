@@ -12,6 +12,6 @@ export default interface IArticle {
 interface IImage {
     src: string;
     alt: string;
+    local: boolean;
     caption?: string;
-    link?: string;
 }

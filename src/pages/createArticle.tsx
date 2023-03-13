@@ -9,7 +9,12 @@ export default function CreateArticle() {
         const userArticleRequest = {
             title: event.target.title.value,
             categories: event.target.categories.value.split(",").map((category: string) => category.trim()),
-            content: event.target.content.value
+            content: event.target.content.value,
+            image: {
+                src: event.target.image_url.value,
+                local: false,
+                caption: event.target.image_caption.value
+            }
         }
 
         api.post("/article/user", userArticleRequest, {
@@ -69,12 +74,14 @@ export default function CreateArticle() {
                             rows={5}
                             color="secondary" />
                         <Box sx={{ display: 'flex', justifyContent: 'space-evenly', m: 1 }}>
-                            <Button variant="contained"
-                                color="secondary">
-                                Upload image
-                            </Button>
-                            <TextField name="image-caption"
-                                id="image-caption"
+                            <TextField name="image_url"
+                                id="image_url"
+                                label="Image URL"
+                                variant="standard"
+                                margin="normal"
+                                color="secondary" />
+                            <TextField name="image_caption"
+                                id="image_caption"
                                 label="Image caption"
                                 variant="standard"
                                 margin="normal"

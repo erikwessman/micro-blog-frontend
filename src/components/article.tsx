@@ -83,7 +83,7 @@ export default function Article(props: { article: IArticle }) {
                             }}>
                             <Box component="figure">
                                 <Box component="img" alt={props.article.image.alt}
-                                    src={"/images/" + props.article.image.src}
+                                    src={props.article.image.local ? "/images/" + props.article.image.src : props.article.image.src}
                                     sx={{
                                         maxHeight: '17rem',
                                         maxWidth: '17rem',
