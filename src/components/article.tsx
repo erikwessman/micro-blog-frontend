@@ -6,6 +6,12 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ShareIcon from '@mui/icons-material/Share';
 
 export default function Article(props: { article: IArticle }) {
+
+    function unixToDate(unixTimestamp: string) {
+        const date = new Date(parseFloat(unixTimestamp) * 1000);
+        return date.toLocaleDateString("en-GB");
+    }
+
     return (
         <Box component="div" className="entry"
             sx={{
@@ -57,7 +63,7 @@ export default function Article(props: { article: IArticle }) {
                             </Link>
                         </Tooltip>
                         <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
-                            {props.article.date}
+                            {unixToDate(props.article.date)}
                         </Typography>
                     </Box>
                 </Box>
@@ -83,7 +89,7 @@ export default function Article(props: { article: IArticle }) {
                             }}>
                             <Box component="figure">
                                 <Box component="img" alt={props.article.image.alt}
-                                    src={props.article.image.local ? "/images/" + props.article.image.src : props.article.image.src}
+                                    src={props.article.image.src}
                                     sx={{
                                         maxHeight: '17rem',
                                         maxWidth: '17rem',

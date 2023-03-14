@@ -3,8 +3,9 @@ import { api } from '@/api';
 import IArticle from '@/types/article';
 import { Container, Box, TextField, Button } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
-import Article from '@/components/article';
 import AddIcon from '@mui/icons-material/Add';
+import ArticleTimeline from '@/components/articleTimeline';
+import ArticleCardDeck from '@/components/articleCardDeck';
 
 export default function Frontpage() {
     const [articles, setArticles] = useState<IArticle[]>([]);
@@ -89,11 +90,7 @@ export default function Frontpage() {
                             Filter
                         </Button>
                     </Box>
-                    <article>
-                        {articles.map((article, index) => (
-                            <Article key={index} article={article} />
-                        ))}
-                    </article>
+                    <ArticleTimeline articles={articles} />
                 </Container>
             </main>
         </Box>
