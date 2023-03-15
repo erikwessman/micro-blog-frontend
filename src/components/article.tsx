@@ -6,7 +6,6 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ShareIcon from '@mui/icons-material/Share';
 
 export default function Article(props: { article: IArticle }) {
-
     function unixToDate(unixTimestamp: string) {
         const date = new Date(parseFloat(unixTimestamp) * 1000);
         return date.toLocaleDateString("en-GB");
