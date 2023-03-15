@@ -67,6 +67,8 @@ export default function Article(props: { article: IArticle }) {
                     </Box>
                 </Box>
 
+                <Divider sx={{ m: 1 }} />
+
                 <Box component="div" className="entry-content"
                     sx={{
                         display: 'flex',

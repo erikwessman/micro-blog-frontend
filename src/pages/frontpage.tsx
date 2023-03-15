@@ -5,7 +5,6 @@ import { Container, Box, TextField, Button } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import ArticleTimeline from '@/components/articleTimeline';
-import ArticleCardDeck from '@/components/articleCardDeck/articleCardDeck';
 
 export default function Frontpage() {
     const [articles, setArticles] = useState<IArticle[]>([]);
@@ -90,7 +89,7 @@ export default function Frontpage() {
                             Filter
                         </Button>
                     </Box>
-                    <ArticleCardDeck articles={articles} />
+                    <ArticleTimeline articles={articles} />
                 </Container>
             </main>
         </Box>
