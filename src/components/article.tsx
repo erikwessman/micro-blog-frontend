@@ -54,16 +54,18 @@ export default function Article(props: { article: IArticle }) {
                         <FaceIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     </Box>
                     <Box component="div" className="entry-information">
-                        <Tooltip title="Author">
-                            <Link href={`/?author=${props.article.author}`}
-                                underline="hover"
-                                color="inherit">
-                                {props.article.author}
-                            </Link>
-                        </Tooltip>
-                        <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
-                            {unixToDate(props.article.date)}
-                        </Typography>
+                        <Link href={`/?author=${props.article.author}`}
+                            underline="hover"
+                            color="inherit">
+                            {props.article.author}
+                        </Link>
+                        <Link href={`/?date=${unixToDate(props.article.date)}`}
+                            underline="hover"
+                            color="inherit">
+                            <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
+                                {unixToDate(props.article.date)}
+                            </Typography>
+                        </Link>
                     </Box>
                 </Box>
 
