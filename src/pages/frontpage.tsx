@@ -4,6 +4,7 @@ import IArticle from '@/types/article';
 import { Container, Box, TextField, Button } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import ArticleTimeline from '@/components/articleTimeline';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -63,7 +64,10 @@ export default function Frontpage() {
                             alignItems: 'center',
                             margin: '1rem'
                         }}>
-                        <Button variant="contained" color="secondary" href="/new" startIcon={<AddIcon />}>
+                        <Button variant="contained"
+                            color="secondary"
+                            href="/new"
+                            startIcon={<AddIcon />}>
                             Create new article
                         </Button>
                     </Box>
@@ -74,7 +78,8 @@ export default function Frontpage() {
                             display: 'flex',
                             justifyContent: 'space-evenly',
                             alignItems: 'center',
-                            margin: '1rem'
+                            m: 1,
+                            p: 1,
                         }}>
                         <TextField name="author"
                             id="author"
@@ -93,7 +98,8 @@ export default function Frontpage() {
                             color="secondary" />
                         <Button type='submit'
                             variant="contained"
-                            color="secondary">
+                            color="secondary"
+                            startIcon={<FilterAltIcon />}>
                             Filter
                         </Button>
                     </Box>
