@@ -5,31 +5,39 @@ import { Container, Box, TextField, Button } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import ArticleTimeline from '@/components/articleTimeline';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function Frontpage() {
     const [articles, setArticles] = useState<IArticle[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
+    const [hasMoreArticles, setHasMoreArticles] = useState<boolean>(true);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const articleLimit = 2;
 
     useEffect(() => {
-        getArticles(searchParams);
+        function getArticles() {
+            api.get(`/article?limit=${articleLimit}`, { params: searchParams })
+                .then(response => {
+                    const articles_resp: IArticle[] = response.data;
+                    if (articles_resp.length === 0 || articles_resp.length < articleLimit) {
+                        setHasMoreArticles(false);
+                    }
+                    setArticles(articles_resp);
+                })
+        }
+        getArticles();
     }, [searchParams]);
 
-    function getArticles(articleParams: URLSearchParams) {
-        api.get("/article", { params: articleParams })
+    function getMoreArticles() {
+        api.get(`/article?page=${currentPage}&limit=${articleLimit}`, { params: searchParams })
             .then(response => {
                 const articles_resp: IArticle[] = response.data;
-                setArticles(articles_resp);
-            })
-            .catch(error => {
-                if (error.response) {
-                    console.log("Data :", error.response.data);
-                    console.log("Status :" + error.response.status);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
+                if (articles_resp.length === 0 || articles_resp.length < articleLimit) {
+                    setHasMoreArticles(false);
                 }
+                setArticles([...articles, ...articles_resp]);
             })
+        setCurrentPage(currentPage + 1)
     }
 
     function handleSubmitFilter(event: any) {
@@ -89,7 +97,21 @@ export default function Frontpage() {
                             Filter
                         </Button>
                     </Box>
-                    <ArticleTimeline articles={articles} />
+                    <InfiniteScroll
+                        dataLength={articles.length}
+                        next={getMoreArticles}
+                        hasMore={hasMoreArticles}
+                        loader={
+                            <p style={{ textAlign: 'center' }}>
+                                <b>Loading...</b>
+                            </p>}
+                        endMessage={
+                            <p style={{ textAlign: 'center' }}>
+                                <b>No more articles available</b>
+                            </p>
+                        }>
+                        <ArticleTimeline articles={articles} />
+                    </InfiniteScroll>
                 </Container>
             </main>
         </Box>

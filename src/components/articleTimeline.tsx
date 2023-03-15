@@ -21,7 +21,12 @@ function from(_i: number) {
 export default function ArticleTimeline(props: { articles: IArticle[] }) {
     const [springs] = useSprings(props.articles.length, i => ({
         ...to(i),
-        from: from(i)
+        from: from(i),
+        config: {
+            mass: 1,
+            tension: 170,    
+            friction: 26
+        }
     }), [])
 
     return (
