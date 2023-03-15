@@ -12,7 +12,6 @@ export default function CreateArticle() {
             content: event.target.content.value,
             image: {
                 src: event.target.image_url.value,
-                local: false,
                 caption: event.target.image_caption.value
             }
         }

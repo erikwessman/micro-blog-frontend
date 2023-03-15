@@ -13,7 +13,7 @@ export default function Login() {
             password: event.target.password.value
         }
 
-        api.get("/authorization/login", { params: loginRequest })
+        api.post("/authorization/login", loginRequest)
             .then(response => {
                 localStorage.setItem('token', response.data['token']);
                 navigate("/");
