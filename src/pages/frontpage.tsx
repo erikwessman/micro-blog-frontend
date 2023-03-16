@@ -12,32 +12,27 @@ export default function Frontpage() {
     const [articles, setArticles] = useState<IArticle[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const [hasMoreArticles, setHasMoreArticles] = useState<boolean>(true);
-    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [currentPage, setCurrentPage] = useState<number>(0);
     const articleLimit = 2;
 
     useEffect(() => {
         function getArticles() {
-            api.get(`/article?limit=${articleLimit}`, { params: searchParams })
+            api.get(`/article?page=${currentPage}&limit=${articleLimit}`, { params: searchParams })
                 .then(response => {
                     const articles_resp: IArticle[] = response.data;
                     if (articles_resp.length === 0 || articles_resp.length < articleLimit) {
                         setHasMoreArticles(false);
                     }
-                    setArticles(articles_resp);
+                    setArticles((prevState) => ([
+                        ...prevState,
+                        ...articles_resp
+                    ]));
                 })
         }
         getArticles();
-    }, [searchParams]);
+    }, [searchParams, currentPage]);
 
     function getMoreArticles() {
-        api.get(`/article?page=${currentPage}&limit=${articleLimit}`, { params: searchParams })
-            .then(response => {
-                const articles_resp: IArticle[] = response.data;
-                if (articles_resp.length === 0 || articles_resp.length < articleLimit) {
-                    setHasMoreArticles(false);
-                }
-                setArticles([...articles, ...articles_resp]);
-            })
         setCurrentPage(currentPage + 1)
     }
 
