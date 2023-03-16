@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { Box, Container, TextField, Button } from "@mui/material"
 import { api } from "@/api"
+import { CustomAlert, ICustomAlert } from "@/components/customAlert";
 
 export default function CreateArticle() {
+    const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert })
 
     function handleSubmitCreateAricle(event: any) {
         event.preventDefault();
@@ -16,28 +19,30 @@ export default function CreateArticle() {
             }
         }
 
-        api.post("/article/user", userArticleRequest, {
-            headers: {
-                'Authorization': localStorage.getItem('token')
-            }
-        })
+        api.post("/article/user", userArticleRequest, { headers: { 'Authorization': localStorage.getItem('token') } })
             .then(response => {
                 console.log(response.data)
             })
             .catch(error => {
-                if (error.response) {
-                    console.log("Data :", error.response.data);
-                    console.log("Status :" + error.response.status);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
-                }
+                setAlert({
+                    ...alert,
+                    open: true,
+                    severity: 'error',
+                    message: error.response.data
+                })
             })
+    }
+
+    function handleCloseAlert() {
+        setAlert({
+            ...alert,
+            open: false
+        })
     }
 
     return (
         <Box component="div">
+            <CustomAlert {...alert} />
             <main>
                 <Container sx={{
                     display: 'flex',

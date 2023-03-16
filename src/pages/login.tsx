@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Box, Container, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { CustomAlert, ICustomAlert } from "@/components/customAlert";
 import { api } from "@/api";
 
 export default function Login() {
+    const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert });
     const navigate = useNavigate();
 
     function handleSubmitLogin(event: any) {
@@ -19,19 +22,25 @@ export default function Login() {
                 navigate("/");
             })
             .catch(error => {
-                if (error.response) {
-                    console.log("Data :", error.response.data);
-                    console.log("Status :" + error.response.status);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
-                }
+                setAlert({
+                    ...alert,
+                    open: true,
+                    severity: 'error',
+                    message: error.response.data
+                })
             })
+    }
+
+    function handleCloseAlert() {
+        setAlert({
+            ...alert,
+            open: false
+        })
     }
 
     return (
         <Box component="div">
+            <CustomAlert {...alert} />
             <main>
                 <Container sx={{
                     display: 'flex',

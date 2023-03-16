@@ -4,12 +4,14 @@ import IArticle from '@/types/article';
 import { Container, Box, TextField, Button } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
+import { CustomAlert, ICustomAlert } from '@/components/customAlert';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import ArticleTimeline from '@/components/articleTimeline';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function Frontpage() {
     const [articles, setArticles] = useState<IArticle[]>([]);
+    const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert })
     const [searchParams, setSearchParams] = useSearchParams();
     const [hasMoreArticles, setHasMoreArticles] = useState<boolean>(true);
     const [currentPage, setCurrentPage] = useState<number>(0);
@@ -28,9 +30,17 @@ export default function Frontpage() {
                         ...articles_resp
                     ]));
                 })
+                .catch(error => {
+                    setAlert({
+                        ...alert,
+                        open: true,
+                        severity: 'error',
+                        message: error.response.data
+                    })
+                })
         }
         getArticles();
-    }, [searchParams, currentPage]);
+    }, [searchParams, currentPage, alert]);
 
     function getMoreArticles() {
         setCurrentPage(currentPage + 1)
@@ -38,18 +48,24 @@ export default function Frontpage() {
 
     function handleSubmitFilter(event: any) {
         event.preventDefault();
-
         const filterParams = {
             ...(event.target.author.value.trim() !== "" && { author: event.target.author.value }),
             ...(event.target.category.value.trim() !== "" && { categories: event.target.category.value }),
             ...(event.target.date.value.trim() !== "" && { date: event.target.date.value })
         }
-
         setSearchParams(filterParams);
+    }
+
+    function handleCloseAlert() {
+        setAlert({
+            ...alert,
+            open: false
+        })
     }
 
     return (
         <Box component="div">
+            <CustomAlert {...alert} />
             <main>
                 <Container>
                     <Box component="div"

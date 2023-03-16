@@ -1,42 +1,44 @@
 import { useState } from "react";
-import { Button, Container, Card, Snackbar, Box } from "@mui/material";
+import { Button, Container, Card, Box } from "@mui/material";
 import { api } from "@/api";
+import { CustomAlert, ICustomAlert } from "@/components/customAlert";
 
 export default function Admin() {
-    const [alertOpen, setAlertOpen] = useState<boolean>(false);
-    const [alertMessage, setAlertMessage] = useState<String>("");
+    const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert });
 
     function getStatus() {
         api.get("/status")
             .then(response => {
-                setAlertOpen(true);
-                setAlertMessage(response.data);
+                setAlert({
+                    ...alert,
+                    open: true,
+                    severity: 'success',
+                    message: response.data
+                })
             })
             .catch(error => {
-                setAlertOpen(false);
-                setAlertMessage("Server is not reachable");
+                setAlert({
+                    ...alert,
+                    open: true,
+                    severity: 'error',
+                    message: error.response.data
+                })
             })
     }
 
-    const handleCloseAlert = (event: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setAlertOpen(false);
-    };
+    function handleCloseAlert() {
+        setAlert({
+            ...alert,
+            open: false
+        })
+    }
 
     return (
         <div>
             <main>
                 <Container>
+                    <CustomAlert {...alert} />
                     <Box sx={{ margin: '2rem' }}>
-                        <Snackbar
-                            open={alertOpen}
-                            autoHideDuration={3000}
-                            onClose={handleCloseAlert}
-                            message={alertMessage}
-                        />
                         <Card variant="outlined">
                             <Button variant="contained" onClick={getStatus} color="secondary">
                                 Get status

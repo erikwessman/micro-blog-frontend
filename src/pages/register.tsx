@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Box, Container, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { api } from "@/api";
 import IUser from "@/types/user";
+import { CustomAlert, ICustomAlert } from "@/components/customAlert";
 
 export default function Register() {
+    const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert });
     const navigate = useNavigate();
 
     function handleSubmitRegister(event: any) {
@@ -21,19 +24,25 @@ export default function Register() {
                 navigate("/");
             })
             .catch(error => {
-                if (error.response) {
-                    console.log("Data :", error.response.data);
-                    console.log("Status :" + error.response.status);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
-                }
+                setAlert({
+                    ...alert,
+                    open: true,
+                    severity: 'error',
+                    message: error.response.data
+                })
             })
+    }
+
+    function handleCloseAlert() {
+        setAlert({
+            ...alert,
+            open: false
+        })
     }
 
     return (
         <Box component="div">
+            <CustomAlert {...alert} />
             <main>
                 <Container sx={{
                     display: 'flex',
