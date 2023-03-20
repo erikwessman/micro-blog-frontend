@@ -6,6 +6,7 @@ import Admin from '@/pages/admin';
 import Settings from '@/pages/settings';
 import Register from '@/pages/register';
 import Login from '@/pages/login';
+import Logout from './pages/logout';
 import ArticlePage from './pages/articlePage';
 import CreateArticle from './pages/createArticle';
 import PageNotFound from '@/pages/pageNotFound';
@@ -23,6 +24,7 @@ export default function App() {
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/logout" element={<Logout />} />
                     <Route path="/article/:id" element={<ArticlePage />} />
                     <Route path="/new" element={<CreateArticle />} />
                     <Route path="*" element={<PageNotFound />} />

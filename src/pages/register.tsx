@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Box, Container, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { api } from "@/api";
 import IUser from "@/types/user";
 import { CustomAlert, ICustomAlert } from "@/components/customAlert";
+import { api } from "@/api";
+import TokenManager from "@/utils/userManager";
 
 export default function Register() {
     const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert });
     const navigate = useNavigate();
+    const tokenManager = new TokenManager();
 
     function handleSubmitRegister(event: any) {
         event.preventDefault();
@@ -20,7 +22,7 @@ export default function Register() {
 
         api.post("/authorization/register", registerRequest)
             .then(response => {
-                localStorage.setItem('token', response.data['token']);
+                tokenManager.updateToken(response.data['token']);
                 navigate("/");
             })
             .catch(error => {

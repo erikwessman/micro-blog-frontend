@@ -3,10 +3,12 @@ import { Box, Container, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { CustomAlert, ICustomAlert } from "@/components/customAlert";
 import { api } from "@/api";
+import TokenManager from "@/utils/userManager";
 
 export default function Login() {
     const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert });
     const navigate = useNavigate();
+    const tokenManager = new TokenManager();
 
     function handleSubmitLogin(event: any) {
         event.preventDefault();
@@ -18,7 +20,7 @@ export default function Login() {
 
         api.post("/authorization/login", loginRequest)
             .then(response => {
-                localStorage.setItem('token', response.data['token']);
+                tokenManager.updateToken(response.data['token']);
                 navigate("/");
             })
             .catch(error => {

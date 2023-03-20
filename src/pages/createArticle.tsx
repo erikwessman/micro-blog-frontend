@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Box, Container, TextField, Button } from "@mui/material"
 import { api } from "@/api"
 import { CustomAlert, ICustomAlert } from "@/components/customAlert";
+import TokenManager from "@/utils/userManager";
 
 export default function CreateArticle() {
     const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert })
+    const tokenManager = new TokenManager();
 
     function handleSubmitCreateAricle(event: any) {
         event.preventDefault();
@@ -19,7 +21,7 @@ export default function CreateArticle() {
             }
         }
 
-        api.post("/article/user", userArticleRequest, { headers: { 'Authorization': localStorage.getItem('token') } })
+        api.post("/article/user", userArticleRequest, { headers: { 'Authorization': tokenManager.getToken() } })
             .then(response => {
                 console.log(response.data)
             })
