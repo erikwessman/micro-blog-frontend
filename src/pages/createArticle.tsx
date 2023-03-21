@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Container, TextField, Button } from "@mui/material"
 import { api } from "@/api"
 import { CustomAlert, ICustomAlert } from "@/components/customAlert";
-import TokenManager from "@/utils/userManager";
+import TokenManager from "@/utils/tokenManager";
 
 export default function CreateArticle() {
     const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert })

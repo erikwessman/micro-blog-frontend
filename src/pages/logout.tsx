@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import TokenManager from "@/utils/userManager";
+import TokenManager from "@/utils/tokenManager";
 
 export default function Logout() {
     const navigate = useNavigate();
@@ -8,7 +8,9 @@ export default function Logout() {
     useEffect(() => {
         const tokenManager = new TokenManager();
         tokenManager.removeToken();
-        navigate("/");
+        setTimeout(() => {
+            navigate("/");
+        }, 500)
     }, [navigate])
 
     return (

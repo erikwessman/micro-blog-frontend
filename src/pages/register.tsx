@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import IUser from "@/types/user";
 import { CustomAlert, ICustomAlert } from "@/components/customAlert";
 import { api } from "@/api";
-import TokenManager from "@/utils/userManager";
+import TokenManager from "@/utils/tokenManager";
 
 export default function Register() {
     const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert });

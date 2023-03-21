@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import CustomThemeProvider from '@/themes/customThemeProvider';
 import Frontpage from '@/pages/frontpage';
@@ -17,17 +17,18 @@ export default function App() {
         <CustomThemeProvider>
             <CssBaseline />
             <BrowserRouter>
-                <Header />
                 <Routes>
-                    <Route path="/" element={<Frontpage />} />
-                    <Route path="/admin" element={<Admin />} />
-                    <Route path="/settings" element={<Settings />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/login" element={<Login />} />
                     <Route path="/logout" element={<Logout />} />
-                    <Route path="/article/:id" element={<ArticlePage />} />
-                    <Route path="/new" element={<CreateArticle />} />
-                    <Route path="*" element={<PageNotFound />} />
+                    <Route path="/" element={<><Header /><Outlet /></>}>
+                        <Route path="/" element={<Frontpage />} />
+                        <Route path="/admin" element={<Admin />} />
+                        <Route path="/settings" element={<Settings />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/article/:id" element={<ArticlePage />} />
+                        <Route path="/new" element={<CreateArticle />} />
+                        <Route path="*" element={<PageNotFound />} />
+                    </Route>
                 </Routes>
             </BrowserRouter>
         </CustomThemeProvider>

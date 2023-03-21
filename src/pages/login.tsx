@@ -3,7 +3,7 @@ import { Box, Container, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { CustomAlert, ICustomAlert } from "@/components/customAlert";
 import { api } from "@/api";
-import TokenManager from "@/utils/userManager";
+import TokenManager from "@/utils/tokenManager";
 
 export default function Login() {
     const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert });

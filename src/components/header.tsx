@@ -12,20 +12,24 @@ import {
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-import TokenManager from '@/utils/userManager';
+import TokenManager from '@/utils/tokenManager';
 
 export default function Header() {
     const [validLogin, setValidLogin] = useState<boolean>(false);
-
+    
     useEffect(() => {
         const tokenManager = new TokenManager();
-        tokenManager.isTokenValid()
-            .then(valid => {
-                setValidLogin(valid);
-            })
-            .catch(() => {
-                setValidLogin(false);
-            })
+        if (tokenManager.hasToken()) {
+            tokenManager.refreshToken()
+                .then(newToken => {
+                    tokenManager.updateToken(newToken);
+                    setValidLogin(true);
+                })
+                .catch(() => {
+                    tokenManager.removeToken();
+                    setValidLogin(false);
+                })
+        }
     }, [])
 
     return (
