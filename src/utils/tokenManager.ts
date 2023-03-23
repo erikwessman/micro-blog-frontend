@@ -19,7 +19,7 @@ export default class TokenManager extends React.Component {
     }
 
     hasToken(): boolean {
-        return localStorage.getItem('token') !== undefined && localStorage.getItem('token') !== "";
+        return localStorage.getItem('token') !== null && localStorage.getItem('token') !== "";
     }
 
     async isTokenValid(): Promise<boolean> {

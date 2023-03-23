@@ -129,11 +129,13 @@ export default function ArticlePage() {
                     <article>
                         {article ? <ArticleFull article={article} comments={comments} /> : <p>Can't find article</p>}
                     </article>
-                    <Box component="div" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '1rem' }}>
-                        <Button variant="contained" color="secondary" onClick={handleOpenDialog}>
-                            Post new comment
-                        </Button>
-                    </Box>
+                    {tokenManager.hasToken() ?
+                        <Box component="div" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '1rem' }}>
+                            <Button variant="contained" color="secondary" onClick={handleOpenDialog}>
+                                Post new comment
+                            </Button>
+                        </Box>
+                        : null}
                 </Container>
             </main>
         </Box>
