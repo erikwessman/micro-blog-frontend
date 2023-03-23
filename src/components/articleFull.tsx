@@ -126,17 +126,18 @@ export default function ArticleFull(props: { article: IArticle, comments: IComme
 
             <Box component="div" className="entry-footer" sx={{ display: 'flex', flexDirection: 'column' }}>
                 {props.comments.map((comment, index) => (
-                    <Box component="div" key={index} sx={{ margin: '1rem', display: 'flex' }}>
+                    <Box component="div" key={index} sx={{ margin: '1rem', padding: '0.5rem' ,borderLeft: '1px solid'}}>
                         <Box component="div">
                             <Typography>
                                 {comment.author}
                             </Typography>
-                            <Typography>
+                            <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
                                 {unixToDate(comment.date)}
                             </Typography>
                         </Box>
+                        <br/>
                         <Box component="div">
-                            {comment.content}
+                            - {comment.content}
                         </Box>
                     </Box>
                 ))}
