@@ -5,7 +5,20 @@ import FaceIcon from '@mui/icons-material/Face';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ShareIcon from '@mui/icons-material/Share';
 
-export default function Article(props: { article: IArticle }) {
+export default function ArticlePreview(props: { article: IArticle }) {
+    const articleMaxLength = 150;
+
+    function formatContent(content: string) {
+        let words = content.split(' ');
+        if (words.length > articleMaxLength) {
+            let newContent = words.slice(0, articleMaxLength);
+            newContent.push(` [...read more](/article/${props.article._id})`);
+            return newContent.join(' ');
+        } else {
+            return content;
+        }
+    }
+
     function unixToDate(unixTimestamp: string) {
         const date = new Date(parseFloat(unixTimestamp) * 1000);
         return date.toLocaleDateString("en-GB");
@@ -31,7 +44,7 @@ export default function Article(props: { article: IArticle }) {
                                 <ShareIcon color="secondary" />
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title="Open in new tab">
+                        <Tooltip title="See full article in new tab">
                             <IconButton href={`/article/${props.article._id}`} target="_blank">
                                 <OpenInNewIcon color="secondary" />
                             </IconButton>
@@ -79,7 +92,7 @@ export default function Article(props: { article: IArticle }) {
 
                     <Box component="div" className="entry-text">
                         <Markdown>
-                            {props.article.content}
+                            {formatContent(props.article.content)}
                         </Markdown>
                     </Box>
 

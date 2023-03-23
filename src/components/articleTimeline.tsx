@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { useSprings, animated } from '@react-spring/web';
 import IArticle from "@/types/article";
-import Article from "./article";
+import ArticlePreview from "./articlePreview";
 
 function to(i: number) {
     return {
@@ -38,7 +38,7 @@ export default function ArticleTimeline(props: { articles: IArticle[] }) {
             {springs.map((spring, index) => (
                 <animated.div key={index}
                     style={{ ...spring }}>
-                    <Article article={props.articles[index]} />
+                    <ArticlePreview article={props.articles[index]} />
                 </animated.div>
             ))}
         </Box>
