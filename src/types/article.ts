@@ -3,7 +3,7 @@ export default interface IArticle {
     title: string;
     author: string;
     description?: string;
-    date: string,
+    date: number,
     categories: string[];
     image?: IImage;
     content: string;

@@ -1,14 +1,15 @@
 import IArticle from "@/types/article";
+import IComment from "@/types/comment";
 import Markdown from "markdown-to-jsx";
 import { Box, Tooltip, Link, Typography, Divider, IconButton } from "@mui/material";
 import FaceIcon from '@mui/icons-material/Face';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ShareIcon from '@mui/icons-material/Share';
 
-export default function ArticleFull(props: { article: IArticle }) {
-    function unixToDate(unixTimestamp: string) {
-        const date = new Date(parseFloat(unixTimestamp) * 1000);
-        return date.toLocaleDateString("en-GB");
+export default function ArticleFull(props: { article: IArticle, comments: IComment[] }) {
+    function unixToDate(unixTimestamp: number) {
+        const date = new Date(unixTimestamp * 1000);
+        return date.toLocaleString("en-GB", { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
     }
 
     return (
@@ -109,7 +110,7 @@ export default function ArticleFull(props: { article: IArticle }) {
 
             <Divider>Categories</Divider>
 
-            <Box component="div" className="entry-footer" sx={{ display: 'flex', marginTop: '0.5rem', justifyContent: 'center' }}>
+            <Box component="div" className="entry-footer" sx={{ display: 'flex', margin: '0.5rem', justifyContent: 'center' }}>
                 {props.article.categories.map((category, index) => (
                     <Link key={index}
                         href={`/?categories=${category}`}
@@ -118,6 +119,26 @@ export default function ArticleFull(props: { article: IArticle }) {
                         sx={{ p: 0.5, m: 0.5, fontWeight: 600 }}>
                         {category}
                     </Link>
+                ))}
+            </Box>
+
+            <Divider>Comments</Divider>
+
+            <Box component="div" className="entry-footer" sx={{ display: 'flex', flexDirection: 'column' }}>
+                {props.comments.map((comment, index) => (
+                    <Box component="div" key={index} sx={{ margin: '1rem', display: 'flex' }}>
+                        <Box component="div">
+                            <Typography>
+                                {comment.author}
+                            </Typography>
+                            <Typography>
+                                {unixToDate(comment.date)}
+                            </Typography>
+                        </Box>
+                        <Box component="div">
+                            {comment.content}
+                        </Box>
+                    </Box>
                 ))}
             </Box>
         </Box>

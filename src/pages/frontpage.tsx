@@ -15,7 +15,7 @@ export default function Frontpage() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [hasMoreArticles, setHasMoreArticles] = useState<boolean>(true);
     const [currentPage, setCurrentPage] = useState<number>(0);
-    const articleLimit = 2;
+    const articleLimit = 3;
 
     useEffect(() => {
         function getArticles() {
@@ -31,16 +31,16 @@ export default function Frontpage() {
                     ]));
                 })
                 .catch(error => {
-                    setAlert({
-                        ...alert,
+                    setAlert((prevState) => ({
+                        ...prevState,
                         open: true,
                         severity: 'error',
                         message: error.response.data
-                    })
+                    }))
                 })
         }
         getArticles();
-    }, [searchParams, currentPage, alert]);
+    }, [searchParams, currentPage]);
 
     function getMoreArticles() {
         setCurrentPage(currentPage + 1)

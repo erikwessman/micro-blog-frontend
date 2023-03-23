@@ -19,8 +19,8 @@ export default function ArticlePreview(props: { article: IArticle }) {
         }
     }
 
-    function unixToDate(unixTimestamp: string) {
-        const date = new Date(parseFloat(unixTimestamp) * 1000);
+    function unixToDate(unixTimestamp: number) {
+        const date = new Date(unixTimestamp * 1000);
         return date.toLocaleDateString("en-GB");
     }
 
