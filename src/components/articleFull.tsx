@@ -3,7 +3,6 @@ import IComment from "@/types/comment";
 import Markdown from "markdown-to-jsx";
 import { Box, Tooltip, Link, Typography, Divider, IconButton } from "@mui/material";
 import FaceIcon from '@mui/icons-material/Face';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ShareIcon from '@mui/icons-material/Share';
 
 export default function ArticleFull(props: { article: IArticle, comments: IComment[] }) {
@@ -30,11 +29,6 @@ export default function ArticleFull(props: { article: IArticle, comments: IComme
                         <Tooltip title="Share">
                             <IconButton>
                                 <ShareIcon color="secondary" />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Open in new tab">
-                            <IconButton href={`/article/${props.article._id}`} target="_blank">
-                                <OpenInNewIcon color="secondary" />
                             </IconButton>
                         </Tooltip>
                     </Box>
