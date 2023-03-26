@@ -1,11 +1,23 @@
+import { useState, useEffect } from "react";
 import IArticle from "@/types/article";
 import IComment from "@/types/comment";
 import Markdown from "markdown-to-jsx";
-import { Box, Tooltip, Link, Typography, Divider, IconButton } from "@mui/material";
+import { Box, Tooltip, Link, Typography, Divider, IconButton, Pagination } from "@mui/material";
 import FaceIcon from '@mui/icons-material/Face';
 import ShareIcon from '@mui/icons-material/Share';
 
 export default function ArticleFull(props: { article: IArticle, comments: IComment[] }) {
+    const [currentCommentPage, setCurrentCommentPage] = useState<number>(1);
+    const [currentComments, setCurrentComments] = useState<IComment[]>([]);
+    const commentsLimit = 5;
+    const nrCommentPages = Math.max(Math.ceil(props.comments.length / commentsLimit), 1);
+
+    useEffect(() => {
+        const start = (currentCommentPage - 1) * commentsLimit;
+        const end = start + commentsLimit;
+        setCurrentComments(props.comments.slice(start, end))
+    }, [currentCommentPage, props.comments])
+
     function unixToDate(unixTimestamp: number) {
         const date = new Date(unixTimestamp * 1000);
         return date.toLocaleString("en-GB", { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
@@ -118,23 +130,28 @@ export default function ArticleFull(props: { article: IArticle, comments: IComme
 
             <Divider>Comments</Divider>
 
-            <Box component="div" className="entry-footer" sx={{ display: 'flex', flexDirection: 'column' }}>
-                {props.comments.map((comment, index) => (
-                    <Box component="div" key={index} sx={{ margin: '1rem', padding: '0.5rem' ,borderLeft: '1px solid'}}>
-                        <Box component="div">
-                            <Typography>
-                                {comment.author}
-                            </Typography>
-                            <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
-                                {unixToDate(comment.date)}
-                            </Typography>
+            <Box component="div" className="entry-footer">
+                <Box component="div" sx={{ display: 'flex', flexDirection: 'column' }}>
+                    {currentComments.map((comment, index) => (
+                        <Box component="div" key={index} sx={{ margin: '1rem', padding: '0.5rem', borderLeft: '1px solid' }}>
+                            <Box component="div">
+                                <Typography>
+                                    {comment.author}
+                                </Typography>
+                                <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
+                                    {unixToDate(comment.date)}
+                                </Typography>
+                            </Box>
+                            <br />
+                            <Box component="div">
+                                - {comment.content}
+                            </Box>
                         </Box>
-                        <br/>
-                        <Box component="div">
-                            - {comment.content}
-                        </Box>
-                    </Box>
-                ))}
+                    ))}
+                </Box>
+                <Box component="div" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Pagination count={nrCommentPages} onChange={(e, value) => (setCurrentCommentPage(value))} />
+                </Box>
             </Box>
         </Box>
     )
