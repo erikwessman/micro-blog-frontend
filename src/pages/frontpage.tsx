@@ -3,48 +3,69 @@ import { api } from '@/api';
 import IArticle from '@/types/article';
 import { Container, Box, TextField, Button } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
-import Article from '@/components/article';
+import AddIcon from '@mui/icons-material/Add';
+import { CustomAlert, ICustomAlert } from '@/components/customAlert';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import ArticleTimeline from '@/components/articleTimeline';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function Frontpage() {
     const [articles, setArticles] = useState<IArticle[]>([]);
+    const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert })
     const [searchParams, setSearchParams] = useSearchParams();
+    const [hasMoreArticles, setHasMoreArticles] = useState<boolean>(true);
+    const [currentPage, setCurrentPage] = useState<number>(0);
+    const articleLimit = 3;
 
     useEffect(() => {
-        getArticles(searchParams);
-    }, [searchParams]);
+        function getArticles() {
+            api.get(`/article?page=${currentPage}&limit=${articleLimit}`, { params: searchParams })
+                .then(response => {
+                    const articles_resp: IArticle[] = response.data;
+                    if (articles_resp.length === 0 || articles_resp.length < articleLimit) {
+                        setHasMoreArticles(false);
+                    }
+                    setArticles((prevState) => ([
+                        ...prevState,
+                        ...articles_resp
+                    ]));
+                })
+                .catch(error => {
+                    setAlert((prevState) => ({
+                        ...prevState,
+                        open: true,
+                        severity: 'error',
+                        message: error.response.data
+                    }))
+                })
+        }
+        getArticles();
+    }, [searchParams, currentPage]);
 
-    function getArticles(articleParams: URLSearchParams) {
-        api.get("/article", { params: articleParams })
-            .then(response => {
-                const articles_resp: IArticle[] = response.data;
-                setArticles(articles_resp);
-            })
-            .catch(error => {
-                if (error.response) {
-                    console.log("Data :", error.response.data);
-                    console.log("Status :" + error.response.status);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
-                }
-            })
+    function getMoreArticles() {
+        setCurrentPage(currentPage + 1)
     }
 
     function handleSubmitFilter(event: any) {
         event.preventDefault();
-
         const filterParams = {
             ...(event.target.author.value.trim() !== "" && { author: event.target.author.value }),
             ...(event.target.category.value.trim() !== "" && { categories: event.target.category.value }),
             ...(event.target.date.value.trim() !== "" && { date: event.target.date.value })
         }
-
         setSearchParams(filterParams);
+    }
+
+    function handleCloseAlert() {
+        setAlert({
+            ...alert,
+            open: false
+        })
     }
 
     return (
         <Box component="div">
+            <CustomAlert {...alert} />
             <main>
                 <Container>
                     <Box component="div"
@@ -54,7 +75,10 @@ export default function Frontpage() {
                             alignItems: 'center',
                             margin: '1rem'
                         }}>
-                        <Button variant="contained" color="secondary" href="/new">
+                        <Button variant="contained"
+                            color="secondary"
+                            href="/new"
+                            startIcon={<AddIcon />}>
                             Create new article
                         </Button>
                     </Box>
@@ -65,7 +89,8 @@ export default function Frontpage() {
                             display: 'flex',
                             justifyContent: 'space-evenly',
                             alignItems: 'center',
-                            margin: '1rem'
+                            m: 1,
+                            p: 1,
                         }}>
                         <TextField name="author"
                             id="author"
@@ -84,15 +109,26 @@ export default function Frontpage() {
                             color="secondary" />
                         <Button type='submit'
                             variant="contained"
-                            color="secondary">
+                            color="secondary"
+                            startIcon={<FilterAltIcon />}>
                             Filter
                         </Button>
                     </Box>
-                    <article>
-                        {articles.map((article, index) => (
-                            <Article key={index} article={article} />
-                        ))}
-                    </article>
+                    <InfiniteScroll
+                        dataLength={articles.length}
+                        next={getMoreArticles}
+                        hasMore={hasMoreArticles}
+                        loader={
+                            <p style={{ textAlign: 'center' }}>
+                                <b>Loading...</b>
+                            </p>}
+                        endMessage={
+                            <p style={{ textAlign: 'center' }}>
+                                <b>No more articles available</b>
+                            </p>
+                        }>
+                        <ArticleTimeline articles={articles} />
+                    </InfiniteScroll>
                 </Container>
             </main>
         </Box>

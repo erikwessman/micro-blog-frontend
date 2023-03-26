@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {
     AppBar,
     Container,
@@ -5,12 +6,32 @@ import {
     Typography,
     Link,
     Box,
+    Tooltip,
     IconButton
 } from '@mui/material';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
+import TokenManager from '@/utils/tokenManager';
 
 export default function Header() {
+    const [validLogin, setValidLogin] = useState<boolean>(false);
+    
+    useEffect(() => {
+        const tokenManager = new TokenManager();
+        if (tokenManager.hasToken()) {
+            tokenManager.refreshToken()
+                .then(newToken => {
+                    tokenManager.updateToken(newToken);
+                    setValidLogin(true);
+                })
+                .catch(() => {
+                    tokenManager.removeToken();
+                    setValidLogin(false);
+                })
+        }
+    }, [])
+
     return (
         <AppBar position="static"
             color="primary">
@@ -50,14 +71,16 @@ export default function Header() {
                         </Link>
                     </Box>
 
-                    <IconButton aria-label="account"
-                        href="/register"
-                        color="secondary"
-                        sx={{
-                            marginLeft: 'auto'
-                        }}>
-                        <AccountCircleIcon />
-                    </IconButton>
+                    <Tooltip title={validLogin ? "Logout" : "Register or log in"}>
+                        <IconButton aria-label="account"
+                            href={validLogin ? "/logout" : "/register"}
+                            color="secondary"
+                            sx={{
+                                marginLeft: 'auto'
+                            }}>
+                            {validLogin ? <LogoutIcon /> : <AccountCircleIcon />}
+                        </IconButton>
+                    </Tooltip>
                 </Toolbar>
             </Container>
         </AppBar>

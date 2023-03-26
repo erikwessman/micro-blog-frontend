@@ -1,11 +1,17 @@
 import IArticle from "@/types/article";
+import IComment from "@/types/comment";
 import Markdown from "markdown-to-jsx";
 import { Box, Tooltip, Link, Typography, Divider, IconButton } from "@mui/material";
 import FaceIcon from '@mui/icons-material/Face';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ShareIcon from '@mui/icons-material/Share';
 
-export default function Article(props: { article: IArticle }) {
+export default function ArticleFull(props: { article: IArticle, comments: IComment[] }) {
+    function unixToDate(unixTimestamp: number) {
+        const date = new Date(unixTimestamp * 1000);
+        return date.toLocaleString("en-GB", { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
     return (
         <Box component="div" className="entry"
             sx={{
@@ -23,12 +29,12 @@ export default function Article(props: { article: IArticle }) {
                     <Box component="div" className="entry-options" sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <Tooltip title="Share">
                             <IconButton>
-                                <ShareIcon />
+                                <ShareIcon color="secondary" />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Open in new tab">
                             <IconButton href={`/article/${props.article._id}`} target="_blank">
-                                <OpenInNewIcon />
+                                <OpenInNewIcon color="secondary" />
                             </IconButton>
                         </Tooltip>
                     </Box>
@@ -49,18 +55,22 @@ export default function Article(props: { article: IArticle }) {
                         <FaceIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     </Box>
                     <Box component="div" className="entry-information">
-                        <Tooltip title="Author">
-                            <Link href={`/?author=${props.article.author}`}
-                                underline="hover"
-                                color="inherit">
-                                {props.article.author}
-                            </Link>
-                        </Tooltip>
-                        <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
-                            {props.article.date}
-                        </Typography>
+                        <Link href={`/?author=${props.article.author}`}
+                            underline="hover"
+                            color="inherit">
+                            {props.article.author}
+                        </Link>
+                        <Link href={`/?date=${unixToDate(props.article.date)}`}
+                            underline="hover"
+                            color="inherit">
+                            <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
+                                {unixToDate(props.article.date)}
+                            </Typography>
+                        </Link>
                     </Box>
                 </Box>
+
+                <Divider sx={{ m: 1 }} />
 
                 <Box component="div" className="entry-content"
                     sx={{
@@ -83,9 +93,10 @@ export default function Article(props: { article: IArticle }) {
                             }}>
                             <Box component="figure">
                                 <Box component="img" alt={props.article.image.alt}
-                                    src={"/images/" + props.article.image.src}
+                                    src={props.article.image.src}
                                     sx={{
-                                        height: '15rem',
+                                        maxHeight: '17rem',
+                                        maxWidth: '17rem',
                                         boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px'
                                     }} />
                                 <Box component="figcaption" sx={{ textAlign: 'center' }}>
@@ -99,7 +110,7 @@ export default function Article(props: { article: IArticle }) {
 
             <Divider>Categories</Divider>
 
-            <Box component="div" className="entry-footer" sx={{ display: 'flex', marginTop: '0.5rem', justifyContent: 'center' }}>
+            <Box component="div" className="entry-footer" sx={{ display: 'flex', margin: '0.5rem', justifyContent: 'center' }}>
                 {props.article.categories.map((category, index) => (
                     <Link key={index}
                         href={`/?categories=${category}`}
@@ -108,6 +119,27 @@ export default function Article(props: { article: IArticle }) {
                         sx={{ p: 0.5, m: 0.5, fontWeight: 600 }}>
                         {category}
                     </Link>
+                ))}
+            </Box>
+
+            <Divider>Comments</Divider>
+
+            <Box component="div" className="entry-footer" sx={{ display: 'flex', flexDirection: 'column' }}>
+                {props.comments.map((comment, index) => (
+                    <Box component="div" key={index} sx={{ margin: '1rem', padding: '0.5rem' ,borderLeft: '1px solid'}}>
+                        <Box component="div">
+                            <Typography>
+                                {comment.author}
+                            </Typography>
+                            <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
+                                {unixToDate(comment.date)}
+                            </Typography>
+                        </Box>
+                        <br/>
+                        <Box component="div">
+                            - {comment.content}
+                        </Box>
+                    </Box>
                 ))}
             </Box>
         </Box>
