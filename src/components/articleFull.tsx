@@ -142,9 +142,7 @@ export default function ArticleFull(props: { article: IArticle, comments: IComme
                     ))}
                 </Box>
                 <Box component="div" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    {props.comments.length > 0 ?
-                        <Pagination count={5} onChange={(e, value) => (props.setCommentPage(value - 1))} />
-                        : <p>No comments yet</p>}
+                    <Pagination count={5} onChange={(e, value) => (props.setCommentPage(value - 1))} />
                 </Box>
             </Box>
         </Box>
