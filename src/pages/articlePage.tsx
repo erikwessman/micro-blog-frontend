@@ -60,36 +60,27 @@ export default function ArticlePage() {
     }, [id, currentPage])
 
     function handlePostComment() {
-        if (newComment !== "") {
-            const commentReq = {
-                content: newComment,
-                article_id: id
-            }
-            api.post("/comment/user", commentReq, { params: { 'article_id': id }, headers: { 'Authorization': tokenManager.getToken() } })
-                .then(() => {
-                    setAlert({
-                        ...alert,
-                        open: true,
-                        severity: 'success',
-                        message: 'Posted comment'
-                    })
-                })
-                .catch(error => {
-                    setAlert({
-                        ...alert,
-                        open: true,
-                        severity: 'error',
-                        message: error.response.data
-                    })
-                })
-        } else {
-            setAlert({
-                ...alert,
-                open: true,
-                severity: 'warning',
-                message: 'Comment cannot be empty'
-            })
+        const commentReq = {
+            content: newComment,
+            article_id: id
         }
+        api.post("/comment/user", commentReq, { params: { 'article_id': id }, headers: { 'Authorization': tokenManager.getToken() } })
+            .then(() => {
+                setAlert({
+                    ...alert,
+                    open: true,
+                    severity: 'success',
+                    message: 'Posted comment'
+                })
+            })
+            .catch(error => {
+                setAlert({
+                    ...alert,
+                    open: true,
+                    severity: 'error',
+                    message: error.response.data
+                })
+            })
     }
 
     function handleCloseAlert() {

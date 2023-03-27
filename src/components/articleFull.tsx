@@ -6,9 +6,13 @@ import FaceIcon from '@mui/icons-material/Face';
 import ShareIcon from '@mui/icons-material/Share';
 
 export default function ArticleFull(props: { article: IArticle, comments: IComment[], setCommentPage: React.Dispatch<React.SetStateAction<number>> }) {
-    function unixToDate(unixTimestamp: number) {
+    function unixToDate(unixTimestamp: number, includeTime: boolean) {
         const date = new Date(unixTimestamp * 1000);
-        return date.toLocaleString("en-GB", { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        if (includeTime) {
+            return date.toLocaleString("en-GB", { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        } else {
+            return date.toLocaleDateString("en-GB");
+        }
     }
 
     return (
@@ -54,11 +58,11 @@ export default function ArticleFull(props: { article: IArticle, comments: IComme
                             color="inherit">
                             {props.article.author}
                         </Link>
-                        <Link href={`/?date=${unixToDate(props.article.date)}`}
+                        <Link href={`/?date=${unixToDate(props.article.date, false)}`}
                             underline="hover"
                             color="inherit">
                             <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
-                                {unixToDate(props.article.date)}
+                                {unixToDate(props.article.date, true)}
                             </Typography>
                         </Link>
                     </Box>
@@ -127,7 +131,7 @@ export default function ArticleFull(props: { article: IArticle, comments: IComme
                                     {comment.author}
                                 </Typography>
                                 <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
-                                    {unixToDate(comment.date)}
+                                    {unixToDate(comment.date, true)}
                                 </Typography>
                             </Box>
                             <br />
@@ -138,7 +142,9 @@ export default function ArticleFull(props: { article: IArticle, comments: IComme
                     ))}
                 </Box>
                 <Box component="div" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Pagination count={5} onChange={(e, value) => (props.setCommentPage(value-1))} />
+                    {props.comments.length > 0 ?
+                        <Pagination count={5} onChange={(e, value) => (props.setCommentPage(value - 1))} />
+                        : <p>No comments yet</p>}
                 </Box>
             </Box>
         </Box>
