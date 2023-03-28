@@ -23,7 +23,7 @@ export default class TokenManager extends React.Component {
     }
 
     async isTokenValid(): Promise<boolean> {
-        return api.get("/authorization/valid", { headers: { "Authorization": this.getToken() } })
+        return api.get("/auth/valid", { headers: { "Authorization": this.getToken() } })
             .then(response => {
                 if (response.status === 200) {
                     return true;
@@ -37,7 +37,7 @@ export default class TokenManager extends React.Component {
     }
 
     async refreshToken(): Promise<string> {
-        return api.post("/authorization/refresh", {}, { headers: { "Authorization": this.getToken() } })
+        return api.post("/auth/refresh", {}, { headers: { "Authorization": this.getToken() } })
             .then(response => {
                 return response.data;
             })

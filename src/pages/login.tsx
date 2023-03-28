@@ -18,7 +18,7 @@ export default function Login() {
             password: event.target.password.value
         }
 
-        api.post("/authorization/login", loginRequest)
+        api.post("/auth/login", loginRequest)
             .then(response => {
                 tokenManager.updateToken(response.data['token']);
                 navigate("/");
