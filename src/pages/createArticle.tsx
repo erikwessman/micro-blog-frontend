@@ -22,8 +22,13 @@ export default function CreateArticle() {
         }
 
         api.post("/article/user", userArticleRequest, { headers: { 'Authorization': tokenManager.getToken() } })
-            .then(response => {
-                console.log(response.data)
+            .then(() => {
+                setAlert({
+                    ...alert,
+                    open: true,
+                    severity: 'success',
+                    message: 'Posted article'
+                })
             })
             .catch(error => {
                 setAlert({
@@ -77,7 +82,7 @@ export default function CreateArticle() {
                             variant="standard"
                             margin="normal"
                             multiline
-                            rows={5}
+                            rows={10}
                             color="secondary" />
                         <Box sx={{ display: 'flex', justifyContent: 'space-evenly', m: 1 }}>
                             <TextField name="image_url"

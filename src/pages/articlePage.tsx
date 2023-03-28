@@ -14,8 +14,10 @@ export default function ArticlePage() {
     const [comments, setComments] = useState<IComment[]>([]);
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const [newComment, setNewComment] = useState<string>("");
+    const [currentPage, setCurrentPage] = useState<number>(0);
     const { id } = useParams();
     const tokenManager = new TokenManager();
+    const commentLimit = 5;
 
     useEffect(() => {
         function getArticle() {
@@ -34,8 +36,12 @@ export default function ArticlePage() {
                 })
         }
 
+        getArticle();
+    }, [id])
+
+    useEffect(() => {
         function getComments() {
-            api.get("/comment", { params: { 'article_id': id } })
+            api.get(`/comment?page=${currentPage}&limit=${commentLimit}`, { params: { 'article_id': id } })
                 .then(response => {
                     const comments_resp: IComment[] = response.data;
                     setComments(comments_resp);
@@ -50,41 +56,31 @@ export default function ArticlePage() {
                 })
         }
 
-        getArticle();
         getComments();
-    }, [id])
+    }, [id, currentPage])
 
     function handlePostComment() {
-        if (newComment !== "") {
-            const commentReq = {
-                content: newComment,
-                article_id: id
-            }
-            api.post("/comment/user", commentReq, { params: { 'article_id': id }, headers: { 'Authorization': tokenManager.getToken() } })
-                .then(() => {
-                    setAlert({
-                        ...alert,
-                        open: true,
-                        severity: 'success',
-                        message: 'Posted comment'
-                    })
-                })
-                .catch(error => {
-                    setAlert({
-                        ...alert,
-                        open: true,
-                        severity: 'error',
-                        message: error.response.data
-                    })
-                })
-        } else {
-            setAlert({
-                ...alert,
-                open: true,
-                severity: 'warning',
-                message: 'Comment cannot be empty'
-            })
+        const commentReq = {
+            content: newComment,
+            article_id: id
         }
+        api.post("/comment/user", commentReq, { params: { 'article_id': id }, headers: { 'Authorization': tokenManager.getToken() } })
+            .then(() => {
+                setAlert({
+                    ...alert,
+                    open: true,
+                    severity: 'success',
+                    message: 'Posted comment'
+                })
+            })
+            .catch(error => {
+                setAlert({
+                    ...alert,
+                    open: true,
+                    severity: 'error',
+                    message: error.response.data
+                })
+            })
     }
 
     function handleCloseAlert() {
@@ -127,7 +123,7 @@ export default function ArticlePage() {
             <main>
                 <Container>
                     <article>
-                        {article ? <ArticleFull article={article} comments={comments} /> : <p>Can't find article</p>}
+                        {article ? <ArticleFull article={article} comments={comments} setCommentPage={setCurrentPage} /> : <p>Can't find article</p>}
                     </article>
                     {tokenManager.hasToken() ?
                         <Box component="div" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '1rem' }}>

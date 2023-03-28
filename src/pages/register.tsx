@@ -20,7 +20,7 @@ export default function Register() {
             password: event.target.password.value
         }
 
-        api.post("/authorization/register", registerRequest)
+        api.post("/auth/register", registerRequest)
             .then(response => {
                 tokenManager.updateToken(response.data['token']);
                 navigate("/");
@@ -43,7 +43,7 @@ export default function Register() {
     }
 
     return (
-        <Box component="div">
+        <Box component="div" sx={{ m: 5 }}>
             <CustomAlert {...alert} />
             <main>
                 <Container sx={{
@@ -89,7 +89,8 @@ export default function Register() {
                             color="secondary" />
                         <Button type="submit"
                             variant="contained"
-                            color="secondary">
+                            color="secondary"
+                            sx={{ m: 5 }}>
                             Register
                         </Button>
                     </Box>

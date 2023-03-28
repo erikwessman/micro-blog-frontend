@@ -1,15 +1,18 @@
 import IArticle from "@/types/article";
 import IComment from "@/types/comment";
 import Markdown from "markdown-to-jsx";
-import { Box, Tooltip, Link, Typography, Divider, IconButton } from "@mui/material";
+import { Box, Tooltip, Link, Typography, Divider, IconButton, Pagination } from "@mui/material";
 import FaceIcon from '@mui/icons-material/Face';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ShareIcon from '@mui/icons-material/Share';
 
-export default function ArticleFull(props: { article: IArticle, comments: IComment[] }) {
-    function unixToDate(unixTimestamp: number) {
+export default function ArticleFull(props: { article: IArticle, comments: IComment[], setCommentPage: React.Dispatch<React.SetStateAction<number>> }) {
+    function unixToDate(unixTimestamp: number, includeTime: boolean) {
         const date = new Date(unixTimestamp * 1000);
-        return date.toLocaleString("en-GB", { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        if (includeTime) {
+            return date.toLocaleString("en-GB", { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        } else {
+            return date.toLocaleDateString("en-GB");
+        }
     }
 
     return (
@@ -30,11 +33,6 @@ export default function ArticleFull(props: { article: IArticle, comments: IComme
                         <Tooltip title="Share">
                             <IconButton>
                                 <ShareIcon color="secondary" />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Open in new tab">
-                            <IconButton href={`/article/${props.article._id}`} target="_blank">
-                                <OpenInNewIcon color="secondary" />
                             </IconButton>
                         </Tooltip>
                     </Box>
@@ -60,11 +58,11 @@ export default function ArticleFull(props: { article: IArticle, comments: IComme
                             color="inherit">
                             {props.article.author}
                         </Link>
-                        <Link href={`/?date=${unixToDate(props.article.date)}`}
+                        <Link href={`/?date=${unixToDate(props.article.date, false)}`}
                             underline="hover"
                             color="inherit">
                             <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
-                                {unixToDate(props.article.date)}
+                                {unixToDate(props.article.date, true)}
                             </Typography>
                         </Link>
                     </Box>
@@ -124,23 +122,28 @@ export default function ArticleFull(props: { article: IArticle, comments: IComme
 
             <Divider>Comments</Divider>
 
-            <Box component="div" className="entry-footer" sx={{ display: 'flex', flexDirection: 'column' }}>
-                {props.comments.map((comment, index) => (
-                    <Box component="div" key={index} sx={{ margin: '1rem', padding: '0.5rem' ,borderLeft: '1px solid'}}>
-                        <Box component="div">
-                            <Typography>
-                                {comment.author}
-                            </Typography>
-                            <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
-                                {unixToDate(comment.date)}
-                            </Typography>
+            <Box component="div" className="entry-footer">
+                <Box component="div" sx={{ display: 'flex', flexDirection: 'column' }}>
+                    {props.comments.map((comment, index) => (
+                        <Box component="div" key={index} sx={{ margin: '1rem', padding: '0.5rem', borderLeft: '1px solid' }}>
+                            <Box component="div">
+                                <Typography>
+                                    {comment.author}
+                                </Typography>
+                                <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
+                                    {unixToDate(comment.date, true)}
+                                </Typography>
+                            </Box>
+                            <br />
+                            <Box component="div">
+                                - {comment.content}
+                            </Box>
                         </Box>
-                        <br/>
-                        <Box component="div">
-                            - {comment.content}
-                        </Box>
-                    </Box>
-                ))}
+                    ))}
+                </Box>
+                <Box component="div" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Pagination count={5} onChange={(e, value) => (props.setCommentPage(value - 1))} />
+                </Box>
             </Box>
         </Box>
     )

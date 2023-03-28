@@ -15,7 +15,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import TokenManager from '@/utils/tokenManager';
 
 export default function Header() {
-    const [validLogin, setValidLogin] = useState<boolean>(false);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     
     useEffect(() => {
         const tokenManager = new TokenManager();
@@ -23,11 +23,11 @@ export default function Header() {
             tokenManager.refreshToken()
                 .then(newToken => {
                     tokenManager.updateToken(newToken);
-                    setValidLogin(true);
+                    setIsLoggedIn(true);
                 })
                 .catch(() => {
                     tokenManager.removeToken();
-                    setValidLogin(false);
+                    setIsLoggedIn(false);
                 })
         }
     }, [])
@@ -57,12 +57,6 @@ export default function Header() {
                     </Typography>
 
                     <Box sx={{ p: 2 }}>
-                        <Link href="/admin"
-                            underline="hover"
-                            sx={{ p: 1 }}
-                            color="inherit">
-                            Admin
-                        </Link>
                         <Link href="/settings"
                             underline="hover"
                             sx={{ p: 1 }}
@@ -71,14 +65,14 @@ export default function Header() {
                         </Link>
                     </Box>
 
-                    <Tooltip title={validLogin ? "Logout" : "Register or log in"}>
+                    <Tooltip title={isLoggedIn ? "Logout" : "Register or log in"}>
                         <IconButton aria-label="account"
-                            href={validLogin ? "/logout" : "/register"}
+                            href={isLoggedIn ? "/logout" : "/register"}
                             color="secondary"
                             sx={{
                                 marginLeft: 'auto'
                             }}>
-                            {validLogin ? <LogoutIcon /> : <AccountCircleIcon />}
+                            {isLoggedIn ? <LogoutIcon /> : <AccountCircleIcon />}
                         </IconButton>
                     </Tooltip>
                 </Toolbar>

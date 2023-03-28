@@ -18,7 +18,7 @@ export default function Login() {
             password: event.target.password.value
         }
 
-        api.post("/authorization/login", loginRequest)
+        api.post("/auth/login", loginRequest)
             .then(response => {
                 tokenManager.updateToken(response.data['token']);
                 navigate("/");
@@ -41,7 +41,7 @@ export default function Login() {
     }
 
     return (
-        <Box component="div">
+        <Box component="div" sx={{ m: 5 }}>
             <CustomAlert {...alert} />
             <main>
                 <Container sx={{
@@ -80,7 +80,8 @@ export default function Login() {
                             color="secondary" />
                         <Button type="submit"
                             variant="contained"
-                            color="secondary">
+                            color="secondary"
+                            sx={{ m: 5 }}>
                             Log in
                         </Button>
                     </Box>
