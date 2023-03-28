@@ -41,7 +41,7 @@ export default function Login() {
     }
 
     return (
-        <Box component="div">
+        <Box component="div" sx={{ m: 5 }}>
             <CustomAlert {...alert} />
             <main>
                 <Container sx={{
@@ -80,7 +80,8 @@ export default function Login() {
                             color="secondary" />
                         <Button type="submit"
                             variant="contained"
-                            color="secondary">
+                            color="secondary"
+                            sx={{ m: 5 }}>
                             Log in
                         </Button>
                     </Box>

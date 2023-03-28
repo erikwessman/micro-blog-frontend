@@ -8,6 +8,7 @@ import { CustomAlert, ICustomAlert } from '@/components/customAlert';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import ArticleTimeline from '@/components/articleTimeline';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import TokenManager from '@/utils/tokenManager';
 
 export default function Frontpage() {
     const [articles, setArticles] = useState<IArticle[]>([]);
@@ -15,6 +16,7 @@ export default function Frontpage() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [hasMoreArticles, setHasMoreArticles] = useState<boolean>(true);
     const [currentPage, setCurrentPage] = useState<number>(0);
+    const tokenManager = new TokenManager();
     const articleLimit = 3;
 
     useEffect(() => {
@@ -75,12 +77,13 @@ export default function Frontpage() {
                             alignItems: 'center',
                             margin: '1rem'
                         }}>
-                        <Button variant="contained"
-                            color="secondary"
-                            href="/new"
-                            startIcon={<AddIcon />}>
-                            Create new article
-                        </Button>
+                        {tokenManager.hasToken() ?
+                            <Button variant="contained"
+                                color="secondary"
+                                href="/new"
+                                startIcon={<AddIcon />}>
+                                Create new article
+                            </Button> : null}
                     </Box>
                     <Box component="form"
                         noValidate
