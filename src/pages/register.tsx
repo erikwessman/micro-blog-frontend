@@ -20,7 +20,7 @@ export default function Register() {
             password: event.target.password.value
         }
 
-        api.post("/authorization/register", registerRequest)
+        api.post("/auth/register", registerRequest)
             .then(response => {
                 tokenManager.updateToken(response.data['token']);
                 navigate("/");
