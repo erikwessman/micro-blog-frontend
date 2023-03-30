@@ -33,7 +33,8 @@ export default function ArticleTimeline(props: { articles: IArticle[] }) {
         <Box component="div"
             sx={{
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                overflow: 'hidden'
             }}>
             {springs.map((spring, index) => (
                 <animated.div key={index}
