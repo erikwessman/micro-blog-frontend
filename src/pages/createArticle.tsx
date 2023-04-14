@@ -23,7 +23,6 @@ export default function CreateArticle() {
             }
         }
 
-        console.log(userArticleRequest)
         api.post("/article/user", userArticleRequest, { headers: { 'Authorization': tokenManager.getToken() } })
             .then(() => {
                 setAlert({
