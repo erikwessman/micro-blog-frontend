@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Box, Container, TextField, Button } from "@mui/material"
 import { api } from "@/api"
 import { CustomAlert, ICustomAlert } from "@/components/customAlert";
+import MDEditor from '@uiw/react-md-editor';
 import TokenManager from "@/utils/tokenManager";
 
 export default function CreateArticle() {
-    const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert })
+    const [alert, setAlert] = useState<ICustomAlert>({ open: false, handleClose: handleCloseAlert });
+    const [mdValue, setMdValue] = useState<any>("");
     const tokenManager = new TokenManager();
 
     function handleSubmitCreateAricle(event: any) {
@@ -14,13 +16,14 @@ export default function CreateArticle() {
         const userArticleRequest = {
             title: event.target.title.value,
             categories: event.target.categories.value.split(",").map((category: string) => category.trim()),
-            content: event.target.content.value,
+            content: mdValue,
             image: {
                 src: event.target.image_url.value,
                 caption: event.target.image_caption.value
             }
         }
 
+        console.log(userArticleRequest)
         api.post("/article/user", userArticleRequest, { headers: { 'Authorization': tokenManager.getToken() } })
             .then(() => {
                 setAlert({
@@ -62,7 +65,7 @@ export default function CreateArticle() {
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            width: '65%'
+                            width: '75%'
                         }}>
                         <TextField name="title"
                             id="title"
@@ -72,18 +75,14 @@ export default function CreateArticle() {
                             color="secondary" />
                         <TextField name="categories"
                             id="categories"
-                            label="Categories"
+                            label="Categories (e.g. Technology, AI, ML)"
                             variant="standard"
                             margin="normal"
                             color="secondary" />
-                        <TextField name="content"
-                            id="content"
-                            label="Content"
-                            variant="standard"
-                            margin="normal"
-                            multiline
-                            rows={10}
-                            color="secondary" />
+                        <MDEditor
+                            value={mdValue}
+                            onChange={setMdValue}
+                        />
                         <Box sx={{ display: 'flex', justifyContent: 'space-evenly', m: 1 }}>
                             <TextField name="image_url"
                                 id="image_url"
