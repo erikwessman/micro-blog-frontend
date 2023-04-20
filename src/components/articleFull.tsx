@@ -128,7 +128,7 @@ export default function ArticleFull(props: { article: IArticle, comments: IComme
                         <Box component="div" key={index} sx={{ margin: '1rem', padding: '0.5rem', borderLeft: '1px solid' }}>
                             <Box component="div">
                                 <Typography>
-                                    {comment.author}
+                                    {comment.author.name}
                                 </Typography>
                                 <Typography sx={{ fontSize: '0.85rem', opacity: '0.6' }}>
                                     {unixToDate(comment.date, true)}
